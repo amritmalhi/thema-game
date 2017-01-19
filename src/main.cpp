@@ -2,6 +2,7 @@
 #include "drawable.hpp"
 #include "rectangle.hpp"
 #include "line.hpp"
+#include "circle.hpp"
 
 int main()
 {
@@ -9,7 +10,8 @@ int main()
   sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
   rectangle shape1(sf::Vector2f(100, 100), sf::Vector2f(100, 100));
   line shape2(sf::Vector2f(200, 200), sf::Vector2f(300, 5), 45);
-  drawable * shapes[] = {&shape1, &shape2};
+  circle shape3( sf::Vector2f( 300, 300 ), 30);
+  drawable * shapes[] = {&shape1, &shape2, &shape3};
   
   while (window.isOpen()){
     sf::Event event;
