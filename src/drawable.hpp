@@ -5,9 +5,9 @@
 
 class drawable {
 protected:
-	sf::Vector2f position;
+	sf::Color color;
 public:
-	drawable(sf::Vector2f position);
+	drawable( sf::Color color = sf::Color::Red );
 	virtual void draw(sf::RenderWindow & window) = 0;
 };
 
