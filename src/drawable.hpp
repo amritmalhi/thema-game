@@ -1,10 +1,10 @@
 #ifndef _DRAWABLE_HPP
 #define _DRAWABLE_HPP
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 class drawable {
-private:
+protected:
 	sf::Vector2f position;
 public:
 	drawable(sf::Vector2f position);
