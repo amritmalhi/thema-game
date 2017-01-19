@@ -6,9 +6,9 @@
 
 class line : public rectangle {
 private:
-	float angle;
+	float thickness;
 public:
-	line(sf::Vector2f position, sf::Vector2f size, float rotation, sf::Color color = sf::Color::Red);
+	line(sf::Vector2f position, sf::Vector2f size, float thickness, sf::Color color = sf::Color::Red);
 	void draw(sf::RenderWindow & window);
 };
 
