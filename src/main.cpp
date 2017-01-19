@@ -4,26 +4,26 @@
 #include "line.hpp"
 #include "circle.hpp"
 
+#include "level.hpp"
+
 int main()
 {
-  
-  sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
-  rectangle shape1(sf::Vector2f(100, 100), sf::Vector2f(100, 100));
-  line shape2(sf::Vector2f(200, 200), sf::Vector2f(300, 5), 45);
-  circle shape3( sf::Vector2f( 300, 300 ), 30);
-  drawable * shapes[] = {&shape1, &shape2, &shape3};
-  
-  while (window.isOpen()){
-    sf::Event event;
-    while (window.pollEvent(event)){
-      if (event.type == sf::Event::Closed)
-	window.close();
-    } 
-    window.clear();
-    for(auto & i : shapes){
-      i->draw(window);
+
+    level l = level("level.txt");
+
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
+
+    while (window.isOpen()){
+        sf::Event event;
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        window.clear();
+
+        l.draw(window);
+
+        window.display();
     }
-    window.display();
-  }
-  return 0;
+    return 0;
 }
