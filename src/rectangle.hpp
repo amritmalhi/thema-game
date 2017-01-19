@@ -7,7 +7,7 @@
 
 class rectangle : public drawable
 {
-private:
+protected:
     sf::Vector2f position;
     sf::Vector2f size;
 public:
