@@ -6,18 +6,10 @@
 class moveable{
 protected:
   sf::Vector2f speed;
-  sf::Vector2f position;
 public:
-  moveable(sf::Vector2f speed, sf::Vector2f position);
-  
-  void set_speed(sf::Vector2f new_speed);
-  void set_position(sf::Vector2f new_position);
-  
-  sf::Vector2f get_position();
-  sf::Vector2f get_speed();
-
-  void move(sf::Vector2f offset);
-  void update();
+  moveable(sf::Vector2f speed);
+  virtual void update()=0;
+  virtual void move(sf::Vector2f offset){}
 };
 
 #endif //MOVEABLE_HPP
