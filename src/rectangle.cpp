@@ -1,7 +1,7 @@
 #include "rectangle.hpp"
 
 rectangle::rectangle(sf::Vector2f pos, sf::Vector2f size):
-  drawable(position),
+  drawable(pos),
   size(size)
 {}
 
