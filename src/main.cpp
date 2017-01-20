@@ -6,10 +6,12 @@
 
 #include "level.hpp"
 
+#define RES_LOC "../"
+
 int main()
 {
 
-    level l = level("level.txt");
+	level l = level(RES_LOC "res/level.txt");
 
     sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
 
