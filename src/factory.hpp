@@ -10,6 +10,13 @@
 
 #include "drawable.hpp"
 
+enum object_type {
+    object_rectangle,
+    object_line,
+    object_circle,
+    object_character
+};
+
 class parse_exception : public std::exception
 {
 private:
@@ -53,6 +60,6 @@ public:
     }
 };
 
-drawable* load_object(std::ifstream& input);
+drawable* load_object(std::ifstream& input, int& type);
 
 #endif // FACTORY_H

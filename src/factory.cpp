@@ -10,8 +10,9 @@
 #include "rectangle.hpp"
 #include "line.hpp"
 #include "circle.hpp"
+#include "character.hpp"
 
-drawable* load_object(std::ifstream& input)
+drawable* load_object(std::ifstream& input, int& type)
 {
     std::string name;
     try {
@@ -34,6 +35,7 @@ drawable* load_object(std::ifstream& input)
         rectangle* rect = new rectangle(sf::Vector2f(x, y),
                                         sf::Vector2f(width, height),
                                         sf::Color(r, g, b));
+        type = object_rectangle;
         return rect;
     } else if (name == "line") {
         float x, y, xto, yto, rotation;
@@ -48,6 +50,7 @@ drawable* load_object(std::ifstream& input)
                            sf::Vector2f(xto, yto),
                            rotation,
                            sf::Color(r, g, b));
+        type = object_line;
         return l;
     } else if (name == "circle") {
         float x, y, size;
@@ -59,6 +62,23 @@ drawable* load_object(std::ifstream& input)
         }
 
         circle* c = new circle(sf::Vector2f(x, y), size, sf::Color(r, g, b));
+        type = object_circle;
+        return c;
+    } else if (name == "character") {
+        float x, y, width, height, speedx, speedy;
+        int r, g, b;
+        try {
+            input >> x >> y >> width >> height >> speedx >> speedy;
+            input >> r >> g >> b;
+        } catch (std::exception& e) {
+            throw parse_exception(name);
+        }
+
+        character* c = new character(sf::Vector2f(x, y),
+                                     sf::Vector2f(width, height),
+                                     sf::Vector2f(speedx, speedy),
+                                     sf::Color(r, g, b));
+        type = object_character;
         return c;
     } else if (name == "") {
         throw end_of_file();

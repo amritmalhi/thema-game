@@ -8,6 +8,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "character.hpp"
+
 level::level()
 {
 
@@ -20,6 +22,7 @@ level::level(std::string fname)
 
 level::~level()
 {
+    controllables.clear();
     drawables.clear();
 }
 
@@ -31,6 +34,14 @@ void level::draw(sf::RenderWindow& window)
     }
 }
 
+void level::handle_input()
+{
+    for (auto& i : controllables)
+    {
+        i->handle_input();
+    }
+}
+
 void level::load_level_from_file(std::string fname)
 {
     try {
@@ -38,8 +49,13 @@ void level::load_level_from_file(std::string fname)
         while (true)
         {
             try {
-                drawables.push_back(
-                    std::shared_ptr<drawable>(load_object(file)));
+                int type;
+                drawable* d = load_object(file, type);
+
+                drawables.push_back(std::shared_ptr<drawable>(d));
+                if (type == object_character) {
+                    controllables.push_back((character*) d);
+                }
             } catch (end_of_file& e) {
                 break;
             }

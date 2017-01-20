@@ -19,6 +19,9 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        l.handle_input();
+
         window.clear();
 
         l.draw(window);

@@ -5,17 +5,19 @@
 #define LEVEL_H
 
 #include <memory>
-#include <list>
+#include <vector>
 #include <string>
 
 #include <SFML/Graphics.hpp>
 
 #include "drawable.hpp"
+#include "controllable.hpp"
 
 class level
 {
 private:
-    std::list<std::shared_ptr<drawable>> drawables;
+    std::vector<std::shared_ptr<drawable>> drawables;
+    std::vector<controllable*> controllables;
 
 public:
     level();
@@ -23,6 +25,7 @@ public:
     ~level();
 
     void draw(sf::RenderWindow& window);
+    void handle_input();
 
     void load_level_from_file(std::string fname);
 };
