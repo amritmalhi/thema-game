@@ -13,6 +13,7 @@
 #include "drawable.hpp"
 #include "controllable.hpp"
 #include "collisionable.hpp"
+#include "physics.hpp"
 
 class level
 {
@@ -20,6 +21,7 @@ private:
     std::vector<std::shared_ptr<drawable>> drawables;
     std::vector<controllable*> controllables;
     std::vector<collisionable*> collisionables;
+    std::vector<physics*> physics_objects;
 
 public:
     level();
@@ -28,6 +30,7 @@ public:
 
     void draw(sf::RenderWindow& window);
     void handle_input();
+    void update();
 
     void load_level_from_file(std::string fname);
 };

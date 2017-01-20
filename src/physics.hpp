@@ -1,4 +1,4 @@
-#ifndef PHYSCICS_HPP
+#ifndef PHYSICS_HPP
 #define PHYSICS_HPP
 class physics
 {

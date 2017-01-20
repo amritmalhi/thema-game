@@ -43,6 +43,7 @@ int main()
         while ( lag >= UPS_MS )
         {
             l.handle_input();
+            l.update();
             lag -= UPS_MS;
         }
         window.clear();

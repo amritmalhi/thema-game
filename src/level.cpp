@@ -23,6 +23,7 @@ level::level(std::string fname)
 
 level::~level()
 {
+    physics_objects.clear();
     collisionables.clear();
     controllables.clear();
     drawables.clear();
@@ -44,6 +45,15 @@ void level::handle_input()
     }
 }
 
+void level::update()
+{
+    for (auto& i : physics_objects)
+    {
+        i->gravity();
+        i->update_gravity();
+    }
+}
+
 void level::load_level_from_file(std::string fname)
 {
     try {
@@ -57,6 +67,7 @@ void level::load_level_from_file(std::string fname)
                 drawables.push_back(std::shared_ptr<drawable>(d));
                 if (type == object_character) {
                     controllables.push_back((character*) d);
+                    physics_objects.push_back((character*) d);
                 } else if (type == object_wall) {
                     collisionables.push_back((wall*) d);
                 }
