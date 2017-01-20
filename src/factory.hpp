@@ -14,7 +14,8 @@ enum object_type {
     object_rectangle,
     object_line,
     object_circle,
-    object_character
+    object_character,
+    object_wall
 };
 
 class parse_exception : public std::exception

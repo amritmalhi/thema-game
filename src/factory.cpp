@@ -11,6 +11,7 @@
 #include "line.hpp"
 #include "circle.hpp"
 #include "character.hpp"
+#include "wall.hpp"
 
 drawable* load_object(std::ifstream& input, int& type)
 {
@@ -80,6 +81,20 @@ drawable* load_object(std::ifstream& input, int& type)
                                      sf::Color(r, g, b));
         type = object_character;
         return c;
+    } else if (name == "wall") {
+        float x, y, width, height;
+        int r, g, b;
+        try {
+            input >> x >> y >> width >> height >> r >> g >> b;
+        } catch (std::exception& e) {
+            throw parse_exception(name);
+        }
+
+        wall* w = new wall(sf::Vector2f(x, y),
+                           sf::Vector2f(width, height),
+                           sf::Color(r, g, b));
+        type = object_wall;
+        return w;
     } else if (name == "") {
         throw end_of_file();
     }

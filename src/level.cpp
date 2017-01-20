@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include "character.hpp"
+#include "wall.hpp"
 
 level::level()
 {
@@ -22,6 +23,7 @@ level::level(std::string fname)
 
 level::~level()
 {
+    collisionables.clear();
     controllables.clear();
     drawables.clear();
 }
@@ -55,6 +57,8 @@ void level::load_level_from_file(std::string fname)
                 drawables.push_back(std::shared_ptr<drawable>(d));
                 if (type == object_character) {
                     controllables.push_back((character*) d);
+                } else if (type == object_wall) {
+                    collisionables.push_back((wall*) d);
                 }
             } catch (end_of_file& e) {
                 break;

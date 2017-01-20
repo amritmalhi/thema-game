@@ -12,12 +12,14 @@
 
 #include "drawable.hpp"
 #include "controllable.hpp"
+#include "collisionable.hpp"
 
 class level
 {
 private:
     std::vector<std::shared_ptr<drawable>> drawables;
     std::vector<controllable*> controllables;
+    std::vector<collisionable*> collisionables;
 
 public:
     level();
