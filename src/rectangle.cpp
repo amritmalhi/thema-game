@@ -1,12 +1,9 @@
 #include "rectangle.hpp"
 
-rectangle::rectangle(sf::Vector2f pos, sf::Vector2f size, sf::Color color) :
+rectangle::rectangle(sf::Vector2f position, sf::Vector2f size, sf::Color color) :
 	drawable(color),
-	position(pos),
-	size(size)
-{
-
-}
+	object(position, size)
+{}
 
 void rectangle::draw(sf::RenderWindow & window)
 {

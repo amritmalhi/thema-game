@@ -4,14 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include "moveable.hpp"
 #include "drawable.hpp"
+#include "object.hpp"
 
-class rectangle : public drawable
+class rectangle : public drawable, public object
 {
-protected:
-    sf::Vector2f position;
-    sf::Vector2f size;
 public:
-    rectangle(sf::Vector2f pos,
+    rectangle(sf::Vector2f position,
               sf::Vector2f size,
               sf::Color color = sf::Color::Red);
     void draw(sf::RenderWindow & window) override;
