@@ -6,7 +6,8 @@
 class physics: public collisionable
 {
 protected:
-    float fall_speed = 1;
+    float fall_speed = 0;
+	float gravitational_acceleration = 0.2;
     sf::Vector2f previous_position;
 public:
 	physics(sf::Vector2f position, sf::Vector2f size);

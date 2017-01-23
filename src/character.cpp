@@ -41,8 +41,8 @@ void character::gravity(std::vector<collisionable*>& collisionables) {
 }
 
 void character::update_gravity() {
-	if (fall_speed <= max_fall_speed){
-		fall_speed += mass;
+	if (fall_speed < max_fall_speed){
+		fall_speed += gravitational_acceleration * gravity_modifier;
 	}
 }
 
