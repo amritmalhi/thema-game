@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include <iostream>
 
 character::character(sf::Vector2f position,sf::Vector2f size, sf::Vector2f speed, sf::Color color):
     rectangle(position, size, color),
@@ -27,13 +28,19 @@ void character::move_right(std::vector<collisionable*>& collisionables){
 }
 
 void character::move_up(std::vector<collisionable*>& collisionables) {
-	fall_speed = -speed.y;
+    float y = physics::position.y;
+    physics::position.y += 1;
+    if (check_new_position(collisionables)) {
+        fall_speed = -speed.y;
+    }
+    physics::position.y = y;
 }
 
 void character::gravity(std::vector<collisionable*>& collisionables) {
     float y = physics::position.y;
 	physics::position.y += fall_speed;
     if (check_new_position(collisionables)) {
+        fall_speed = 0;
         physics::position.y = y;
         return;
     }
