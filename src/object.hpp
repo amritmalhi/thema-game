@@ -14,7 +14,7 @@ protected:
     sf::Vector2f position;
     sf::Vector2f size;
 public:
-    object(sf::Vector2f position, sf::Vector2f size):
+    object(sf::Vector2f position, sf::Vector2f size = sf::Vector2f(100, 100)):
         position(position), size(size)
     {}
 };

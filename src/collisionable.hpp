@@ -21,7 +21,7 @@ enum object_position{
 class collisionable: public object{
 public:
     collisionable(sf::Vector2f position, sf::Vector2f size);
-    virtual bool detect_collision(collisionable & other);
+    bool detect_collision(collisionable & other);
     object_position detect_position(collisionable & other);
 };
 

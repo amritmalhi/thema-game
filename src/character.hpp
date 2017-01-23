@@ -6,16 +6,21 @@
 #include "controllable.hpp"
 #include <SFML/Graphics.hpp>
 #include "physics.hpp"
+#include "collisionable.hpp"
 
-class character : public rectangle, public moveable, public controllable, public physics {
+class character : public rectangle, public moveable,
+                  public controllable, public physics{
 private:
     sf::Keyboard::Key move_down_key;
 	float fall_speed = 1;
 	float max_fall_speed = 3;
-	float mass = 1.2;
+	float mass = 1.01;
 
 public:
-	character(sf::Vector2f position, sf::Vector2f size, sf::Vector2f speed, sf::Color color = sf::Color::Red);
+	character(sf::Vector2f position,
+              sf::Vector2f size,
+              sf::Vector2f speed,
+              sf::Color color = sf::Color::Red);
     void update()override;
     void move(sf::Vector2f offset)override;
     void move_right()override;
