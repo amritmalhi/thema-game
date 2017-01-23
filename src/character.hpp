@@ -20,12 +20,10 @@ public:
               sf::Vector2f size,
               sf::Vector2f speed,
               sf::Color color = sf::Color::Red);
-    void update()override;
-    void move(sf::Vector2f offset)override;
-    void move_right()override;
-    void move_left()override;
-	void move_up()override;
-	void gravity();
+    void move_right(std::vector<collisionable*>& collisionables) override;
+    void move_left(std::vector<collisionable*>& collisionables) override;
+	void move_up(std::vector<collisionable*>& collisionables) override;
+	void gravity(std::vector<collisionable*>& collisionables);
 	void update_gravity();
     void draw(sf::RenderWindow & window) override;
 };

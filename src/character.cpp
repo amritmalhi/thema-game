@@ -6,34 +6,38 @@ character::character(sf::Vector2f position,sf::Vector2f size, sf::Vector2f speed
     physics(position, size)
 {}
 
-void character::update(){
-    previous_position = physics::position;
-    rectangle::position+=speed;
-    physics::position = rectangle::position;
+void character::move_left(std::vector<collisionable*>& collisionables){
+    float x = physics::position.x;
+    physics::position.x -= speed.x;
+    if (check_new_position(collisionables)) {
+        physics::position.x = x;
+        return;
+    }
+    rectangle::position = physics::position;
 }
 
-void character::move(sf::Vector2f offset){
-    rectangle::position +=offset;
-    physics::position = rectangle::position;
+void character::move_right(std::vector<collisionable*>& collisionables){
+    float x = physics::position.x;
+    physics::position.x += speed.x;
+    if (check_new_position(collisionables)) {
+        physics::position.x = x;
+        return;
+    }
+    rectangle::position = physics::position;
 }
 
-void character::move_left(){
-    rectangle::position.x-=speed.x;
-    physics::position = rectangle::position;
-}
-
-void character::move_right(){
-    rectangle::position.x+=speed.x;
-    physics::position = rectangle::position;
-}
-
-void character::move_up() {
+void character::move_up(std::vector<collisionable*>& collisionables) {
 	fall_speed = -speed.y;
 }
 
-void character::gravity() {
-	rectangle::position.y += fall_speed;
-    physics::position = rectangle::position;
+void character::gravity(std::vector<collisionable*>& collisionables) {
+    float y = physics::position.y;
+	physics::position.y += fall_speed;
+    if (check_new_position(collisionables)) {
+        physics::position.y = y;
+        return;
+    }
+    rectangle::position = physics::position;
 }
 
 void character::update_gravity() {

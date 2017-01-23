@@ -8,14 +8,14 @@ controllable::controllable(sf::Keyboard::Key move_left_key,
   move_up_key(move_up_key)
 {}
 
-void controllable::handle_input(){
+void controllable::handle_input(std::vector<collisionable*>& collisionables){
 	if(sf::Keyboard::isKeyPressed(move_left_key)){
-		move_left();
+		move_left(collisionables);
 	}
 	if(sf::Keyboard::isKeyPressed(move_right_key)){
-		move_right();
+		move_right(collisionables);
 	}
 	if (sf::Keyboard::isKeyPressed(move_up_key)) {
-		move_up();
+		move_up(collisionables);
 	}
 }

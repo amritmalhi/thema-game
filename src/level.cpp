@@ -41,7 +41,7 @@ void level::handle_input()
 {
     for (auto& i : controllables)
     {
-        i->handle_input();
+        i->handle_input(collisionables);
     }
 }
 
@@ -49,17 +49,8 @@ void level::update()
 {
     for (auto& i : physics_objects)
     {
-        i->gravity();
+        i->gravity(collisionables);
         i->update_gravity();
-
-        for (auto& j : collisionables) {
-            if (i != j) {
-                if (i->detect_collision(*j)) {
-                    
-                    i->handle_collision(*j);
-                }
-            }
-        }
     }
 }
 
