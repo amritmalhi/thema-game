@@ -1,4 +1,4 @@
-#ifdef _DEFINES_HPP
+#ifndef _DEFINES_HPP
 #define _DEFINES_hpp
 
 #include <chrono>
