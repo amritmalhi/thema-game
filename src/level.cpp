@@ -51,6 +51,14 @@ void level::update()
     {
         i->gravity();
         i->update_gravity();
+
+        for (auto& j : collisionables) {
+            if (i != j) {
+                if (i->detect_collision(*j)) {
+                    i->handle_collision(*j);
+                }
+            }
+        }
     }
 }
 
@@ -68,6 +76,7 @@ void level::load_level_from_file(std::string fname)
                 if (type == object_character) {
                     controllables.push_back((character*) d);
                     physics_objects.push_back((character*) d);
+                    collisionables.push_back((character*) d);
                 } else if (type == object_wall) {
                     collisionables.push_back((wall*) d);
                 }
