@@ -12,7 +12,7 @@ class character : public rectangle, public moveable,
                   public controllable, public physics{
 private:
     sf::Keyboard::Key move_down_key;
-	float max_fall_speed = 6;
+	float max_fall_speed = 8;
 	float gravity_modifier = 1;
 
 
