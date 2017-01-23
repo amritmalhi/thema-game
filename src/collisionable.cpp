@@ -1,5 +1,6 @@
 
 #include "collisionable.hpp"
+#include <iostream>
 /*///===============================================
   FILE:       collisionable.cpp
   AUTHOR:     Stefan de Beer
@@ -17,7 +18,8 @@ bool collisionable::detect_collision(collisionable & other){
                           (int)other.position.y,
                           (int)other.size.x,
                           (int)other.size.y);
-    return (this_box.intersects(other_box));
+    bool buf = this_box.intersects(other_box);
+    return buf;
 }
 
 

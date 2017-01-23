@@ -12,9 +12,8 @@ class character : public rectangle, public moveable,
                   public controllable, public physics{
 private:
     sf::Keyboard::Key move_down_key;
-	float fall_speed = 1;
-	float max_fall_speed = 3;
-	float mass = 1.01;
+	float max_fall_speed = 8;
+	float mass = 0.2;
 
 public:
 	character(sf::Vector2f position,
@@ -28,6 +27,7 @@ public:
 	void move_up()override;
 	void gravity();
 	void update_gravity();
+    void draw(sf::RenderWindow & window) override;
 };
 
 #endif //CHARACTER_HPP

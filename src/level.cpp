@@ -55,6 +55,7 @@ void level::update()
         for (auto& j : collisionables) {
             if (i != j) {
                 if (i->detect_collision(*j)) {
+                    
                     i->handle_collision(*j);
                 }
             }

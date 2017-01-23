@@ -5,6 +5,9 @@
 
 class physics: public collisionable
 {
+protected:
+    float fall_speed = 1;
+    sf::Vector2f previous_position;
 public:
 	physics(sf::Vector2f position, sf::Vector2f size); 
 	virtual void gravity() = 0;

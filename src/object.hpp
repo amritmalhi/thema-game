@@ -17,6 +17,8 @@ public:
     object(sf::Vector2f position, sf::Vector2f size = sf::Vector2f(100, 100)):
         position(position), size(size)
     {}
+    sf::Vector2f get_position();
+    sf::Vector2f get_size();
 };
 
 #endif //OBJECT_H
