@@ -7,9 +7,9 @@ character::character(sf::Vector2f position,sf::Vector2f size, sf::Vector2f speed
     physics(position, size)
 {}
 
-void character::move_left(std::vector<collisionable*>& collisionables){
+void character::move_left(std::vector<collisionable*>& collisionables, float speed_modifier){
     float x = physics::position.x;
-    physics::position.x -= speed.x;
+    physics::position.x -= speed.x * speed_modifier;
     if (check_new_position(collisionables)) {
         physics::position.x = x;
         return;
@@ -17,9 +17,9 @@ void character::move_left(std::vector<collisionable*>& collisionables){
     rectangle::position = physics::position;
 }
 
-void character::move_right(std::vector<collisionable*>& collisionables){
+void character::move_right(std::vector<collisionable*>& collisionables, float speed_modifier){
     float x = physics::position.x;
-    physics::position.x += speed.x;
+    physics::position.x += speed.x * speed_modifier;
     if (check_new_position(collisionables)) {
         physics::position.x = x;
         return;
