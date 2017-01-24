@@ -1,8 +1,8 @@
-#ifndef MENU_MAIN_H
+#ifndef MAIN_MENU_H
 /* ==========================================================================
-   File: menu_main.hpp
+   File: main_menu.hpp
    ========================================================================== */
-#define MENU_MAIN_H
+#define MAIN_MENU_H
 
 #include "menu.hpp"
 

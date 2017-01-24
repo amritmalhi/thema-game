@@ -9,7 +9,7 @@
 #include "defines.hpp"
 #include "window.hpp"
 
-#include "menu_main.hpp"
+#include "menu/main_menu.hpp"
 
 sf::Font FONT;
 

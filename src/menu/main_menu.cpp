@@ -1,10 +1,8 @@
 /* ==========================================================================
-   File: menu_main.cpp
+   File: main_menu.cpp
    ========================================================================== */
 
-#include "menu_main.hpp"
-
-#include <iostream>
+#include "main_menu.hpp"
 
 menu_main::menu_main()
 {
