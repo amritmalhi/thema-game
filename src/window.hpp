@@ -19,6 +19,7 @@ private:
 public:
     window(sf::String window_title, sf::Vector2f window_size);
     void set_target(character & target);
+    void no_target();
     void resize();
 };
 

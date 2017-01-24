@@ -25,10 +25,16 @@ void window::set_target(character & target){
     setView(view);
 }
 
+void window::no_target()
+{
+    sf::View view;
+    view.setSize(window_size.x, window_size.y);
+    view.setCenter(window_size.x / 2, window_size.y / 2);
+    setView(view);
+}
+
 void window::resize(){
     sf::Vector2u new_size = getSize();
     window_size.x = (float)new_size.x;
     window_size.y = (float)new_size.y;
 }
-
-
