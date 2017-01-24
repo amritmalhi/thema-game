@@ -27,6 +27,8 @@ public:
 	void gravity(std::vector<collisionable*>& collisionables);
 	void update_gravity();
     void draw(sf::RenderWindow & window) override;
+    sf::Vector2f get_position();
+    sf::Vector2f get_size();
 };
 
 #endif //CHARACTER_HPP

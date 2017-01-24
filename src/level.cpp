@@ -16,6 +16,19 @@ level::level()
 
 }
 
+character& level::get_current_target()
+{
+    return *trackables[current_trackable];
+}
+
+void level::next_controllables()
+{
+    current_trackable++;
+    if(current_trackable >= trackables.size()){
+        current_trackable = 0;
+    }
+}
+
 level::level(std::string fname)
 {
     load_level_from_file(fname);
@@ -23,6 +36,7 @@ level::level(std::string fname)
 
 level::~level()
 {
+    trackables.clear();
     physics_objects.clear();
     collisionables.clear();
     controllables.clear();
@@ -31,6 +45,7 @@ level::~level()
 
 void level::draw(sf::RenderWindow& window)
 {
+    
     for (auto& i : drawables)
     {
         i->draw(window);
@@ -68,7 +83,9 @@ void level::load_level_from_file(std::string fname)
                 if (type == object_character) {
                     controllables.push_back((character*) d);
                     physics_objects.push_back((character*) d);
+                    controllables.push_back((character*) d);
                     collisionables.push_back((character*) d);
+                    trackables.push_back((character*) d);
                 } else if (type == object_wall) {
                     collisionables.push_back((wall*) d);
                 }
