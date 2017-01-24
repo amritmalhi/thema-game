@@ -10,6 +10,7 @@
 
 #include "character.hpp"
 #include "wall.hpp"
+#include "level_button.hpp"
 
 level::level()
 {
@@ -88,7 +89,10 @@ void level::load_level_from_file(std::string fname)
                     trackables.push_back((character*) d);
                 } else if (type == object_wall) {
                     collisionables.push_back((wall*) d);
-                }
+				}
+				else if (type == object_level_button) {
+					collisionables.push_back((level_button*) d);
+				}
             } catch (end_of_file& e) {
                 break;
             }

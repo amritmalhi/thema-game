@@ -12,6 +12,8 @@
 #include "circle.hpp"
 #include "character.hpp"
 #include "wall.hpp"
+#include "level_button.hpp"
+#include "level_lever.hpp"
 
 drawable* load_object(std::ifstream& input, int& type)
 {
@@ -81,20 +83,56 @@ drawable* load_object(std::ifstream& input, int& type)
                                      sf::Color(r, g, b));
         type = object_character;
         return c;
-    } else if (name == "wall") {
-        float x, y, width, height;
-        int r, g, b;
-        try {
-            input >> x >> y >> width >> height >> r >> g >> b;
-        } catch (std::exception& e) {
-            throw parse_exception(name);
-        }
+	}
+	else if (name == "wall") {
+		float x, y, width, height;
+		int r, g, b;
+		try {
+			input >> x >> y >> width >> height >> r >> g >> b;
+		}
+		catch (std::exception& e) {
+			throw parse_exception(name);
+		}
 
-        wall* w = new wall(sf::Vector2f(x, y),
-                           sf::Vector2f(width, height),
-                           sf::Color(r, g, b));
-        type = object_wall;
-        return w;
+		wall* w = new wall(sf::Vector2f(x, y),
+			sf::Vector2f(width, height),
+			sf::Color(r, g, b));
+		type = object_wall;
+		return w;
+
+	} else if (name == "level_button") {
+		float x, y, width, height;
+		int r, g, b;
+		try {
+			input >> x >> y >> width >> height >> r >> g >> b;
+		}
+		catch (std::exception& e) {
+			throw parse_exception(name);
+		}
+
+		level_button* l_b = new level_button(sf::Vector2f(x, y),
+			sf::Vector2f(width, height),
+			sf::Color(r, g, b));
+		type = object_level_button;
+		return l_b;
+
+	}
+	else if (name == "level_lever") {
+		float x, y, width, height;
+		int r, g, b;
+		try {
+			input >> x >> y >> width >> height >> r >> g >> b;
+		}
+		catch (std::exception& e) {
+			throw parse_exception(name);
+		}
+
+		level_lever* l_l = new level_lever(sf::Vector2f(x, y),
+			sf::Vector2f(width, height),
+			sf::Color(r, g, b));
+		type = object_level_lever;
+		return l_l;
+
     } else if (name == "") {
         throw end_of_file();
     }
