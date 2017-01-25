@@ -20,7 +20,7 @@ void character::move_up(std::vector<collisionable*>& collisionables) {
     sf::Vector2f previous_pos{ physics::position };
     physics::position.y += 10;
     if( check_new_position( collisionables ) ) {
-        acceleration.y += -20;
+        acceleration.y += -14;
     }
     physics::position = previous_pos;
 }
@@ -44,13 +44,11 @@ void character::update_position(std::vector<collisionable*>& collisionables) {
         physics::position = previous_pos;
         return;
     }
-    {
-        if (acceleration.x > 0) {
-            acceleration.x *= 0.8f;
-        }
-        else if (acceleration.x < 0) {
-            acceleration.x *= 0.8f;
-        }
+    if (acceleration.x > 0) {
+        acceleration.x *= 0.8f;
+    }
+    else if (acceleration.x < 0) {
+        acceleration.x *= 0.8f;
     }
 
     rectangle::position += physics::position;
@@ -89,11 +87,11 @@ void character::update_air_resistance(sf::Vector2f& speed) {
     if (acceleration.y > max_acceleration_y) {
         acceleration.y = max_acceleration_y;
     }
-    else if (acceleration.y < -max_acceleration_y) {
-        acceleration.y = -max_acceleration_y;
-    }
-    std::cout << "speed: " << speed.x << " : " << speed.y << std::endl;
-    std::cout << "acceleration: " << acceleration.x << " : " << acceleration.y << std::endl;
+//    else if (acceleration.y < max_acceleration_y) {
+//        acceleration.y = max_acceleration_y;
+//    }
+    std::cout << "acceleration :" << acceleration.x << " : " << acceleration.y << std::endl;
+    std::cout << "speed :" << speed.x << " : " << speed.y << std::endl;
 }
 
 void character::draw(sf::RenderWindow & window){
