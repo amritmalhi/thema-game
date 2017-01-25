@@ -17,8 +17,8 @@ public:
                sf::Keyboard::Key move_right_key = sf::Keyboard::Right,
 			   sf::Keyboard::Key move_up_key = sf::Keyboard::Up);
   void handle_input(std::vector<collisionable*>& collisionables);
-  virtual void move_left(std::vector<collisionable*>& collisionables, float speed_modifier = 1){}
-  virtual void move_right(std::vector<collisionable*>& collisionables, float speed_modifier = 1){}
+  virtual void move_left(std::vector<collisionable*>& collisionables, float acceleration_modifier = 1){}
+  virtual void move_right(std::vector<collisionable*>& collisionables, float acceleration_modifier = 1){}
   virtual void move_up(std::vector<collisionable*>& collisionables){}
 };
 

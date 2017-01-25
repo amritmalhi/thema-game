@@ -66,10 +66,10 @@ drawable* load_object(std::ifstream& input, int& type)
         type = object_circle;
         return c;
     } else if (name == "character") {
-        float x, y, width, height, speedx, speedy;
+        float x, y, width, height, accelerationx, accelerationy;
         int r, g, b;
         try {
-            input >> x >> y >> width >> height >> speedx >> speedy;
+            input >> x >> y >> width >> height;
             input >> r >> g >> b;
         } catch (std::exception& e) {
             throw parse_exception(name);
@@ -77,7 +77,6 @@ drawable* load_object(std::ifstream& input, int& type)
 
         character* c = new character(sf::Vector2f(x, y),
                                      sf::Vector2f(width, height),
-                                     sf::Vector2f(speedx, speedy),
                                      sf::Color(r, g, b));
         type = object_character;
         return c;

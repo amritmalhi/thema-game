@@ -49,8 +49,7 @@ void level::update()
 {
     for (auto& i : physics_objects)
     {
-        i->gravity(collisionables);
-        i->update_gravity();
+        i->update_position(collisionables);
     }
 }
 
