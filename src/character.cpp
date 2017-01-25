@@ -31,8 +31,6 @@ void character::update_position(std::vector<collisionable*>& collisionables) {
     sf::Vector2f previous_pos{ physics::position };
     sf::Vector2f previous_speed{ speed };
 
-
-    
     update_gravity();
     update_air_resistance();
 
@@ -86,6 +84,13 @@ void character::update_air_resistance() {
     float max_speed_x = 10;
     float max_speed_y = 20;
 
+    if (speed.x > 0) {
+        speed.x *= 0.8f;
+    }
+    else if (speed.x < 0) {
+        speed.x *= 0.8f;
+    }
+
     if (speed.x > max_speed_x) {
         speed.x = max_speed_x;
     }
@@ -96,11 +101,11 @@ void character::update_air_resistance() {
         speed.y = max_speed_y;
     }
 
-    if (speed.x > 0) {
-        speed.x *= 0.8f;
+    if (speed.y < 0.1 && speed.y > -0.1) {
+        speed.y = 0;
     }
-    else if (speed.x < 0) {
-        speed.x *= 0.8f;
+    if (speed.x < 0.1 && speed.x > -0.1) {
+        speed.x = 0;
     }
 
     std::cout << this << " - speed :" << speed.x << " : " << speed.y << std::endl;
