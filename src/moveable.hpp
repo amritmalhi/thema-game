@@ -5,9 +5,9 @@
 
 class moveable{
 protected:
-    sf::Vector2f speed;
+    sf::Vector2f acceleration{ 0, 0 };
 public:
-    moveable(sf::Vector2f speed);
+    moveable();
     virtual void update(){};
     virtual void move(sf::Vector2f offset){}
 };
