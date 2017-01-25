@@ -98,3 +98,11 @@ void character::draw(sf::RenderWindow & window){
     rectangle::position = physics::position;
     rectangle::draw(window);
 }
+
+sf::Vector2f character::get_position(){
+    return physics::position;
+}
+
+sf::Vector2f character::get_size(){
+    return physics::size;
+}

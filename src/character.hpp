@@ -26,6 +26,8 @@ public:
 	void update_gravity();
     void update_air_resistance(sf::Vector2f& speed);
     void draw(sf::RenderWindow & window) override;
+    sf::Vector2f get_position();
+    sf::Vector2f get_size();
 };
 
 #endif //CHARACTER_HPP
