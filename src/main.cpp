@@ -84,9 +84,16 @@ int main()
                     }
                 }
             } else if (state == STATE_LEVEL &&
-                       event.type == sf::Event::KeyReleased &&
-                       event.key.code == sf::Keyboard::Escape) {
-                state = STATE_PAUSE_MENU;
+                       event.type == sf::Event::KeyReleased) {
+                switch (event.key.code)
+                {
+                    case sf::Keyboard::Escape:
+                        state = STATE_PAUSE_MENU;
+                        break;
+                    case sf::Keyboard::Q:
+                        l.next_controllables();
+                        break;
+                }
             } else if (state == STATE_PAUSE_MENU &&
                        event.type == sf::Event::KeyReleased &&
                        event.key.code == sf::Keyboard::Escape) {

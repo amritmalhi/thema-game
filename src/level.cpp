@@ -46,7 +46,7 @@ level::~level()
 
 void level::draw(sf::RenderWindow& window)
 {
-    
+
     for (auto& i : drawables)
     {
         i->draw(window);
@@ -55,10 +55,7 @@ void level::draw(sf::RenderWindow& window)
 
 void level::handle_input()
 {
-    for (auto& i : controllables)
-    {
-        i->handle_input(collisionables);
-    }
+    controllables[current_trackable]->handle_input(collisionables);
 }
 
 void level::update()
@@ -84,7 +81,6 @@ void level::load_level_from_file(std::string fname)
                 if (type == object_character) {
                     controllables.push_back((character*) d);
                     physics_objects.push_back((character*) d);
-                    controllables.push_back((character*) d);
                     collisionables.push_back((character*) d);
                     trackables.push_back((character*) d);
                 } else if (type == object_wall) {
