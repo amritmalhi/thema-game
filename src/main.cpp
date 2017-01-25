@@ -10,11 +10,13 @@
 #include "window.hpp"
 
 #include "menu/main_menu.hpp"
+#include "menu/pause_menu.hpp"
 
 sf::Font FONT;
 
 enum {
     STATE_MAIN_MENU,
+    STATE_PAUSE_MENU,
     STATE_LEVEL
 };
 
@@ -30,7 +32,8 @@ int main()
     window window("thema game", sf::Vector2f(window_witdh, window_height));
     window.setFramerateLimit( FPS );
 
-    menu_main m = menu_main();
+    main_menu m = main_menu();
+    pause_menu mp = pause_menu();
 
     auto lag = std::chrono::nanoseconds(0);
     auto elapsed = std::chrono::nanoseconds(0);
@@ -47,21 +50,43 @@ int main()
             if(event.type == sf::Event::Resized){
                 window.resize();
                 m.resize(event.size.width, event.size.height);
+                mp.resize(event.size.width, event.size.height);
             }
             if (event.type == sf::Event::MouseButtonReleased &&
                 event.mouseButton.button == sf::Mouse::Left) {
-                int ret = m.handle_input(event.mouseButton.x,
-                                         event.mouseButton.y);
-                switch (ret)
-                {
-                    case NEW_GAME:
-                        l = level(RES_LOC "res/level.txt");
-                        state = STATE_LEVEL;
-                        break;
-                    case QUIT_GAME:
-                        window.close();
-                        break;
+                if (state == STATE_MAIN_MENU) {
+                    int ret = m.handle_input(event.mouseButton.x,
+                                             event.mouseButton.y);
+                    switch (ret)
+                    {
+                        case NEW_GAME:
+                            l = level(RES_LOC "res/level.txt");
+                            state = STATE_LEVEL;
+                            break;
+                        case QUIT_GAME:
+                            window.close();
+                            break;
+                    }
+                } else if (state == STATE_PAUSE_MENU) {
+                    int ret = mp.handle_input(event.mouseButton.x,
+                                             event.mouseButton.y);
+                    switch (ret)
+                    {
+                        case PAUSE_MENU_RESUME:
+                            state = STATE_LEVEL;
+                            break;
+                        case PAUSE_MENU_BACK_TO_MAIN_MENU:
+                            state = STATE_MAIN_MENU;
+                            break;
+                        case PAUSE_MENU_QUIT_GAME:
+                            window.close();
+                            break;
+                    }
                 }
+            } else if (state == STATE_LEVEL &&
+                       event.type == sf::Event::KeyReleased &&
+                       event.key.code == sf::Keyboard::Escape) {
+                state = STATE_PAUSE_MENU;
             }
         }
         current = std::chrono::high_resolution_clock::now();
@@ -75,6 +100,8 @@ int main()
             switch (state)
             {
                 case STATE_MAIN_MENU:
+                    break;
+                case STATE_PAUSE_MENU:
                     break;
                 case STATE_LEVEL:
                     l.handle_input();
@@ -92,6 +119,10 @@ int main()
             case STATE_MAIN_MENU:
                 window.no_target();
                 m.draw(window);
+                break;
+            case STATE_PAUSE_MENU:
+                window.no_target();
+                mp.draw(window);
                 break;
             case STATE_LEVEL:
                 window.set_target(l.get_current_target());
