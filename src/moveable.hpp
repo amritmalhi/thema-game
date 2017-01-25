@@ -5,7 +5,7 @@
 
 class moveable{
 protected:
-    sf::Vector2f acceleration{ 0, 0 };
+    sf::Vector2f speed{ 0, 0 };
 public:
     moveable();
     virtual void update(){};

@@ -24,7 +24,7 @@ public:
 	void move_up(std::vector<collisionable*>& collisionables) override;
 	void update_position(std::vector<collisionable*>& collisionables);
 	void update_gravity();
-    void update_air_resistance(sf::Vector2f& speed);
+    void update_air_resistance();
     void draw(sf::RenderWindow & window) override;
     sf::Vector2f get_position();
     sf::Vector2f get_size();

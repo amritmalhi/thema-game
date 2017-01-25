@@ -8,62 +8,83 @@ character::character(sf::Vector2f position,sf::Vector2f size, sf::Color color):
 {}
 
 void character::move_left(std::vector<collisionable*>& collisionables, float acceleration_modifier){
-    acceleration.x += -10 * acceleration_modifier;
+    speed.x += -10 * acceleration_modifier;
 }
 
 void character::move_right(std::vector<collisionable*>& collisionables, float acceleration_modifier){
-    acceleration.x += 10 * acceleration_modifier;
+    speed.x += 10 * acceleration_modifier;
 }
 
 void character::move_up(std::vector<collisionable*>& collisionables) {
 
     sf::Vector2f previous_pos{ physics::position };
-    physics::position.y += 10;
-    if( check_new_position( collisionables ) ) {
-        acceleration.y += -14;
+    physics::position.y += 1;
+    if( check_new_position( collisionables ) ) { // Check if there is something below me
+        speed.y += -14;
     }
     physics::position = previous_pos;
 }
 
 void character::update_position(std::vector<collisionable*>& collisionables) {
     
-
-    sf::Vector2f speed{ acceleration.x/2 , acceleration.y/2 };
-
+    
     sf::Vector2f previous_pos{ physics::position };
-    physics::position += speed;
+    sf::Vector2f previous_speed{ speed };
 
+
+    
     update_gravity();
-    update_air_resistance(speed);
+    update_air_resistance();
 
+/*
+    physics::position.y += -1;
+    if (check_new_position(collisionables)) { // check if there is something above me
+        speed.y = 0; // Stop moving vertically
+        std::cout << "There is something above " << this << std::endl;
+    }
+    physics::position = previous_pos;
 
-    if (check_new_position(collisionables) ) {
-        speed = sf::Vector2f(0.f, 0.f);
-        acceleration.y = 0;
+    physics::position.y += 1;
+    if (check_new_position(collisionables) ) { // check if there is something below me
+        speed.y = 0; // Stop moving vertically
+        std::cout << "There is something below " << this << std::endl;
+    }
+    physics::position = previous_pos;
 
+    physics::position.x += -1;
+    if (check_new_position(collisionables)) { // check if there is something to the left of me
+        speed.x = 0; // Stop moving horizontally
+        std::cout << "There is something to the left of " << this << std::endl;
+    }
+    physics::position = previous_pos;
+
+    physics::position.x += 1;
+    if (check_new_position(collisionables)) { // check if there is something to the right of me
+        speed.x = 0; // Stop moving horizontally
+        std::cout << "There is something to the right of " << this << std::endl;
+    }
+    physics::position = previous_pos;
+    */
+
+    physics::position += speed;
+    if (check_new_position(collisionables)) {
         physics::position = previous_pos;
+        speed.y = 0; // Stop moving vertically
+
         return;
-    }
-    if (acceleration.x > 0) {
-        acceleration.x *= 0.8f;
-    }
-    else if (acceleration.x < 0) {
-        acceleration.x *= 0.8f;
     }
 
     rectangle::position += physics::position;
 }
 
 void character::update_gravity() {
-    acceleration.y += gravitational_acceleration.y * gravity_modifier.y;
-    acceleration.x += gravitational_acceleration.x * gravity_modifier.x;
+    speed.y += gravitational_acceleration.y * gravity_modifier.y;
+    speed.x += gravitational_acceleration.x * gravity_modifier.x;
 }
 
-void character::update_air_resistance(sf::Vector2f& speed) {
-    float max_speed_x = 50;
-    float max_speed_y = 50;
-    float max_acceleration_x = 10;
-    float max_acceleration_y = 10;
+void character::update_air_resistance() {
+    float max_speed_x = 10;
+    float max_speed_y = 20;
 
     if (speed.x > max_speed_x) {
         speed.x = max_speed_x;
@@ -74,24 +95,15 @@ void character::update_air_resistance(sf::Vector2f& speed) {
     if (speed.y > max_speed_y) {
         speed.y = max_speed_y;
     }
-    else if (speed.y < -max_speed_y) {
-        speed.y = -max_speed_y;
+
+    if (speed.x > 0) {
+        speed.x *= 0.8f;
+    }
+    else if (speed.x < 0) {
+        speed.x *= 0.8f;
     }
 
-    if (acceleration.x > max_acceleration_x) {
-        acceleration.x = max_acceleration_x;
-    }
-    else if (acceleration.x < -max_acceleration_x) {
-        acceleration.x = -max_acceleration_x;
-    }
-    if (acceleration.y > max_acceleration_y) {
-        acceleration.y = max_acceleration_y;
-    }
-//    else if (acceleration.y < max_acceleration_y) {
-//        acceleration.y = max_acceleration_y;
-//    }
-    std::cout << "acceleration :" << acceleration.x << " : " << acceleration.y << std::endl;
-    std::cout << "speed :" << speed.x << " : " << speed.y << std::endl;
+    std::cout << this << " - speed :" << speed.x << " : " << speed.y << std::endl;
 }
 
 void character::draw(sf::RenderWindow & window){
