@@ -87,6 +87,10 @@ int main()
                        event.type == sf::Event::KeyReleased &&
                        event.key.code == sf::Keyboard::Escape) {
                 state = STATE_PAUSE_MENU;
+            } else if (state == STATE_PAUSE_MENU &&
+                       event.type == sf::Event::KeyReleased &&
+                       event.key.code == sf::Keyboard::Escape) {
+                state = STATE_LEVEL;
             }
         }
         current = std::chrono::high_resolution_clock::now();
