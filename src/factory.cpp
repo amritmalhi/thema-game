@@ -68,7 +68,7 @@ drawable* load_object(std::ifstream& input, int& type)
         type = object_circle;
         return c;
     } else if (name == "character") {
-        float x, y, width, height, accelerationx, accelerationy;
+        float x, y, width, height;
         int r, g, b;
         try {
             input >> x >> y >> width >> height;
