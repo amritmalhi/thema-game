@@ -34,15 +34,14 @@ void character::update_position(std::vector<collisionable*>& collisionables) {
     update_gravity();
     update_air_resistance();
 
-/*
-    physics::position.y += -1;
+    physics::position.y += -speed.y;
     if (check_new_position(collisionables)) { // check if there is something above me
         speed.y = 0; // Stop moving vertically
         std::cout << "There is something above " << this << std::endl;
     }
     physics::position = previous_pos;
 
-    physics::position.y += 1;
+    physics::position.y += speed.y;
     if (check_new_position(collisionables) ) { // check if there is something below me
         speed.y = 0; // Stop moving vertically
         std::cout << "There is something below " << this << std::endl;
@@ -62,13 +61,10 @@ void character::update_position(std::vector<collisionable*>& collisionables) {
         std::cout << "There is something to the right of " << this << std::endl;
     }
     physics::position = previous_pos;
-    */
 
     physics::position += speed;
     if (check_new_position(collisionables)) {
         physics::position = previous_pos;
-        speed.y = 0; // Stop moving vertically
-
         return;
     }
 
