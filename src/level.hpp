@@ -25,6 +25,7 @@ private:
     std::vector<collisionable*> collisionables;
     std::vector<physics*> physics_objects;
     std::vector<character*> trackables;
+	std::map<std::string, sf::Texture> textures;
     unsigned int current_trackable = 0;
     
 public:

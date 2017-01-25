@@ -7,6 +7,8 @@
 
 class circle : public drawable
 {
+private:
+	sf::CircleShape circle_shape;
 protected:
 	sf::Vector2f position;
 	float radius;
@@ -15,6 +17,7 @@ public:
 		float size,
 		sf::Color color = sf::Color::Red);
 	void draw(sf::RenderWindow & window) override;
+	void set_texture(sf::Texture * texture) override;
 };
 
 #endif //circle_HPP

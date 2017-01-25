@@ -63,6 +63,6 @@ public:
     }
 };
 
-drawable* load_object(std::ifstream& input, int& type);
+drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf::Texture> & textures);
 
 #endif // FACTORY_H

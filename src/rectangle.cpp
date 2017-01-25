@@ -7,10 +7,12 @@ rectangle::rectangle(sf::Vector2f position, sf::Vector2f size, sf::Color color) 
 
 void rectangle::draw(sf::RenderWindow & window)
 {
-	sf::RectangleShape myRect;
-	myRect.setSize(size);
-	myRect.setPosition(position);
-	myRect.setFillColor(color);
-	window.draw(myRect);
+	rectangle_shape.setSize(size);
+	rectangle_shape.setPosition(position);
+	rectangle_shape.setFillColor(color);
+	window.draw(rectangle_shape);
 }
 
+void rectangle::set_texture(sf::Texture* texture) {
+	rectangle_shape.setTexture(texture);
+}
