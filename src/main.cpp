@@ -52,11 +52,39 @@ int main()
                 m.resize(event.size.width, event.size.height);
                 mp.resize(event.size.width, event.size.height);
             }
-            if (event.type == sf::Event::MouseButtonReleased &&
-                event.mouseButton.button == sf::Mouse::Left) {
+            if (event.type == sf::Event::MouseMoved) {
+                switch (state)
+                {
+                    case STATE_MAIN_MENU:
+                        m.update_mouse_position(event.mouseMove.x,
+                                                event.mouseMove.y);
+                        break;
+                    case STATE_PAUSE_MENU:
+                        mp.update_mouse_position(event.mouseMove.x,
+                                                 event.mouseMove.y);
+                        break;
+                }
+            }
+            if ((event.type == sf::Event::MouseButtonReleased &&
+                 event.mouseButton.button == sf::Mouse::Left) ||
+                (event.type == sf::Event::KeyReleased &&
+                 event.key.code == sf::Keyboard::Return) ||
+                (event.type == sf::Event::JoystickButtonReleased &&
+                 event.joystickButton.button == 14)) {
                 if (state == STATE_MAIN_MENU) {
-                    int ret = m.handle_input(event.mouseButton.x,
-                                             event.mouseButton.y);
+                    int ret;
+                    switch (event.type)
+                    {
+                        case sf::Event::MouseButtonReleased:
+                            ret = m.handle_mouse_input(event.mouseButton.x,
+                                                       event.mouseButton.y);
+                            break;
+                        case sf::Event::KeyReleased:
+                        case sf::Event::JoystickButtonReleased:
+                            ret = m.handle_button_input_execute();
+                            break;
+                    }
+
                     switch (ret)
                     {
                         case NEW_GAME:
@@ -68,8 +96,19 @@ int main()
                             break;
                     }
                 } else if (state == STATE_PAUSE_MENU) {
-                    int ret = mp.handle_input(event.mouseButton.x,
-                                             event.mouseButton.y);
+                    int ret;
+                    switch (event.type)
+                    {
+                        case sf::Event::MouseButtonReleased:
+                            ret = mp.handle_mouse_input(event.mouseButton.x,
+                                                        event.mouseButton.y);
+                            break;
+                        case sf::Event::KeyReleased:
+                        case sf::Event::JoystickButtonReleased:
+                            ret = mp.handle_button_input_execute();
+                            break;
+                    }
+
                     switch (ret)
                     {
                         case PAUSE_MENU_RESUME:
@@ -94,10 +133,71 @@ int main()
                         l.next_controllables();
                         break;
                 }
+            } else if (state == STATE_LEVEL &&
+                       event.type == sf::Event::JoystickButtonReleased) {
+                switch (event.joystickButton.button)
+                {
+                    case 3:
+                        state = STATE_PAUSE_MENU;
+                        break;
+                    case 11:
+                    case 15:
+                        l.next_controllables();
+                        break;
+                }
+
+            } else if (state == STATE_MAIN_MENU &&
+                       event.type == sf::Event::KeyReleased) {
+                switch(event.key.code)
+                {
+                    case sf::Keyboard::Up:
+                        m.handle_button_input_previous();
+                        break;
+                    case sf::Keyboard::Down:
+                        m.handle_button_input_next();
+                        break;
+                }
+            } else if (state == STATE_MAIN_MENU &&
+                       event.type == sf::Event::JoystickButtonReleased) {
+                switch (event.joystickButton.button)
+                {
+                    case 4:
+                        m.handle_button_input_previous();
+                        break;
+                    case 6:
+                        m.handle_button_input_next();
+                        break;
+                }
+
             } else if (state == STATE_PAUSE_MENU &&
-                       event.type == sf::Event::KeyReleased &&
-                       event.key.code == sf::Keyboard::Escape) {
-                state = STATE_LEVEL;
+                       event.type == sf::Event::KeyReleased) {
+                switch(event.key.code)
+                {
+                    case sf::Keyboard::Escape:
+                        state = STATE_LEVEL;
+                        break;
+                    case sf::Keyboard::Up:
+                        mp.handle_button_input_previous();
+                        break;
+                    case sf::Keyboard::Down:
+                        mp.handle_button_input_next();
+                        break;
+                }
+            } else if (state == STATE_PAUSE_MENU &&
+                       event.type == sf::Event::JoystickButtonReleased) {
+                switch (event.joystickButton.button)
+                {
+                    case 3:
+                        state = STATE_LEVEL;
+                        break;
+                    case 4:
+                        mp.handle_button_input_previous();
+                        break;
+                    case 6:
+                        mp.handle_button_input_next();
+                        break;
+                }
+
             }
         }
         current = std::chrono::high_resolution_clock::now();

@@ -22,7 +22,8 @@ public:
                 sf::Vector2f position = sf::Vector2f(0, 0),
                 sf::Vector2f size = sf::Vector2f(500, 70));
 
-    bool check_pressed(int x, int y);
+    bool check_location(int x, int y);
+    void set_active(bool active);
 
     virtual void draw(sf::RenderWindow& window);
     virtual void set_position(sf::Vector2f position);

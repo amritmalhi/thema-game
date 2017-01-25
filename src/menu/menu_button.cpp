@@ -23,7 +23,7 @@ background(size)
     background.setFillColor(sf::Color(183, 0, 255));
 }
 
-bool menu_button::check_pressed(int x, int y)
+bool menu_button::check_location(int x, int y)
 {
     if (x >= background.getPosition().x &&
         x < background.getPosition().x + size.x &&
@@ -33,6 +33,15 @@ bool menu_button::check_pressed(int x, int y)
     }
 
     return false;
+}
+
+void menu_button::set_active(bool active)
+{
+    if (active) {
+        background.setFillColor(sf::Color(255, 107, 0));
+    } else {
+        background.setFillColor(sf::Color(183, 0, 255));
+    }
 }
 
 void menu_button::draw(sf::RenderWindow& window)
