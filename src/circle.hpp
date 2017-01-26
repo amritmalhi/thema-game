@@ -17,7 +17,7 @@ public:
 		float size,
 		sf::Color color = sf::Color::Red);
 	void draw(sf::RenderWindow & window) override;
-	void set_texture(sf::Texture * texture) override;
+	void set_texture() override;
 };
 
 #endif //circle_HPP

@@ -16,6 +16,6 @@ void circle::draw(sf::RenderWindow & window)
 	window.draw(circle_shape);
 }
 
-void circle::set_texture(sf::Texture * texture) {
-	circle_shape.setTexture(texture);
+void circle::set_texture() {
+	circle_shape.setTexture(&texture);
 }

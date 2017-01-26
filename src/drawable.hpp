@@ -6,11 +6,12 @@
 class drawable {
 protected:
 	sf::Color color;
+    sf::Texture texture;
 public:
 	drawable( sf::Color color = sf::Color::Red);
 	virtual void draw(sf::RenderWindow & window) = 0;
 	void add_texture(std::map<std::string, sf::Texture> & textures, std::string & texture_file_name);
-	virtual void set_texture(sf::Texture * texture) = 0;
+	virtual void set_texture() = 0;
 };
 
 #endif
