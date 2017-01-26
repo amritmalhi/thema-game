@@ -8,13 +8,15 @@ void drawable::add_texture(std::map<std::string, sf::Texture> & textures, std::s
 	if (texture_file_name == "None") {
 		return;
 	}
-	try {
-		sf::Texture& texture = textures[texture_file_name];
+	sf::Texture texture;
+	auto & texture_iterator = textures.find(texture_file_name);
+	if (texture_iterator != textures.end()) {
+		texture = texture_iterator->second;
 	}
-	catch (std::exception & e) {
-		sf::Texture texture;
+	else {
 		if (!texture.loadFromFile(texture_file_name)) {
 			std::cout << "Unable to load! " << texture_file_name << std::endl;
+			return;
 		}
 		textures[texture_file_name] = texture;
 	}
