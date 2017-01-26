@@ -84,10 +84,10 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		return c;
 	}
 	else if (name == "character") {
-		float x, y, width, height;
+		float x, y, width, height, speedx, speedy;
 		int r, g, b;
 		try {
-			input >> x >> y >> width >> height;
+			input >> x >> y >> width >> height >> speedx >> speedy;
 			input >> r >> g >> b;
 		}
 		catch (std::exception& e) {
@@ -95,8 +95,9 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		}
 
 		character* c = new character(sf::Vector2f(x, y),
-			sf::Vector2f(width, height),
-			sf::Color(r, g, b));
+                                     sf::Vector2f(width, height),
+                                     sf::Vector2f(speedx, speedy),
+                                     sf::Color(r, g, b));
 		type = object_character;
 		return c;
 	}

@@ -75,7 +75,7 @@ void level::load_level_from_file(std::string fname)
         {
             try {
                 int type;
-                drawable* d = load_object(file, type);
+                drawable* d = load_object(file, type, textures);
 
                 drawables.push_back(std::shared_ptr<drawable>(d));
                 if (type == object_character) {
