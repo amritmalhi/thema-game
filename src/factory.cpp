@@ -80,15 +80,20 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		}
 
 		circle* c = new circle(sf::Vector2f(x, y), size, sf::Color(r, g, b));
+        c->add_texture(textures, texture_file_name);
 		type = object_circle;
 		return c;
 	}
 	else if (name == "character") {
 		float x, y, width, height, speedx, speedy;
 		int r, g, b;
+        std::string texture_file_name;
 		try {
 			input >> x >> y >> width >> height >> speedx >> speedy;
-			input >> r >> g >> b;
+			input >> r >> g >> b >> texture_file_name;
+            if (texture_file_name == "") {
+				texture_file_name = "None";
+			}
 		}
 		catch (std::exception& e) {
 			throw parse_exception(name);
@@ -98,6 +103,7 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
                                      sf::Vector2f(width, height),
                                      sf::Vector2f(speedx, speedy),
                                      sf::Color(r, g, b));
+        c->add_texture(textures, texture_file_name);
 		type = object_character;
 		return c;
 	}
