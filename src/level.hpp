@@ -39,6 +39,8 @@ public:
     
     void load_level_from_file(std::string fname);
 
+    void handle_collisions();
+    
     void next_controllables();
     character& get_current_target();
 };

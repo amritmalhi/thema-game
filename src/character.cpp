@@ -72,3 +72,25 @@ sf::Vector2f character::get_size(){
 void character::respawn(){
     physics::position = spawn_point;
 }
+void character::handle_collision(std::vector<collisionable*>& collisionables){
+    for(auto& i : collisionables){
+        if(i != this){
+            if(detect_collision(*i)){
+                switch(i->get_object_type()){
+                case object_wall:
+                    std::cout<<"wall"<<std::endl;
+                    break;
+                case object_killbox:
+                    respawn();
+                    break;
+                }
+                    
+                /*
+                if(i->get_object_type()==object_killbox){
+                    respawn();
+                }
+                */
+            }
+        }
+    }
+}
