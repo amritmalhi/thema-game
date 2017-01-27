@@ -14,6 +14,7 @@ File: factory.cpp
 #include "wall.hpp"
 #include "level_button.hpp"
 #include "level_lever.hpp"
+#include "object.hpp"
 
 drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf::Texture> & textures)
 {
@@ -158,6 +159,26 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		return l_l;
 
 	}
+
+    else if (name == "killbox") {
+		float x, y, width, height;
+		int r, g, b;
+		try {
+			input >> x >> y >> width >> height >> r >> g >> b;
+		}
+		catch (std::exception& e) {
+			throw parse_exception(name);
+		}
+
+		wall* w = new wall(sf::Vector2f(x, y),
+			sf::Vector2f(width, height),
+            sf::Color(r, g, b),
+            object_killbox);
+		type = object_wall;
+		return w;
+
+	}
+    
 	else if (name == "") {
 		throw end_of_file();
 	}
