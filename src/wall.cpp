@@ -6,6 +6,5 @@
 /*///===============================================
 wall::wall(sf::Vector2f position, sf::Vector2f size, sf::Color color):
     rectangle(position, size, color),
-    collisionable(position, size)
+    collisionable(position, size, object_wall)
 {}
-

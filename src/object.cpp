@@ -12,3 +12,7 @@ sf::Vector2f object::get_size(){
     return size;
 }
 
+object_type object::get_object_type()
+{
+    return type;
+}

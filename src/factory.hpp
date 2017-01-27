@@ -10,16 +10,6 @@
 
 #include "drawable.hpp"
 
-enum object_type {
-    object_rectangle,
-    object_line,
-    object_circle,
-    object_character,
-    object_wall,
-	object_level_button,
-	object_level_lever
-};
-
 class parse_exception : public std::exception
 {
 private:

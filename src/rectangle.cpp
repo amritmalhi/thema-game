@@ -3,8 +3,8 @@
 #include <iostream>
 
 rectangle::rectangle(sf::Vector2f position, sf::Vector2f size, sf::Color color) :
-	drawable(color),
-	object(position, size)
+drawable(color),
+object(position, object_rectangle, size)
 {
     rectangle_shape.setFillColor(color);
 }

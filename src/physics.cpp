@@ -6,10 +6,12 @@
   DATE:       2017-01-20
 /*///===============================================
 
-physics::physics(sf::Vector2f position, sf::Vector2f size):
-    collisionable(position, size),
-    previous_position(position)
-{}
+physics::physics(sf::Vector2f position, sf::Vector2f size, object_type type):
+collisionable(position, size, type),
+previous_position(position)
+{
+
+}
 
 bool physics::check_new_position(std::vector<collisionable*>& collisionables)
 {

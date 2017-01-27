@@ -2,10 +2,12 @@
 #include <iostream>
 
 character::character(sf::Vector2f position,sf::Vector2f size, sf::Vector2f speed, sf::Color color):
-    rectangle(position, size, color),
-    moveable(speed),
-    physics(position, size)
-{}
+rectangle(position, size, color),
+moveable(speed),
+physics(position, size, object_character)
+{
+
+}
 
 void character::move_left(std::vector<collisionable*>& collisionables, float speed_modifier){
     float x = physics::position.x;

@@ -10,7 +10,7 @@ protected:
 	float gravitational_acceleration = 0.2;
     sf::Vector2f previous_position;
 public:
-	physics(sf::Vector2f position, sf::Vector2f size);
+	physics(sf::Vector2f position, sf::Vector2f size, object_type type);
 	virtual void gravity(std::vector<collisionable*>& collisionables) = 0;
 	virtual void update_gravity() = 0;
     bool check_new_position(std::vector<collisionable*>& collisionables);
