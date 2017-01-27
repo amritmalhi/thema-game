@@ -10,6 +10,7 @@ class level_button : public rectangle, public collisionable
 {
 public:
 	level_button(sf::Vector2f position, sf::Vector2f size, sf::Color color);
+	virtual void activate();
 };
 
 #endif //lEVEL_BUTTON_H
