@@ -14,7 +14,6 @@ public:
 	virtual void gravity(std::vector<collisionable*>& collisionables) = 0;
 	virtual void update_gravity() = 0;
     bool check_new_position(std::vector<collisionable*>& collisionables);
-    void handle_collision(collisionable & other);
-};
+    void handle_collision(collisionable & other);};
 
 #endif
