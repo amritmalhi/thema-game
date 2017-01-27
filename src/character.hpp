@@ -30,7 +30,6 @@ public:
     sf::Vector2f get_position();
     sf::Vector2f get_size();
     void respawn();
-    void handle_collision(std::vector<collisionable*>& collisionables)override;
 };
 
 #endif //CHARACTER_HPP

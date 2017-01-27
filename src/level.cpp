@@ -67,12 +67,6 @@ void level::update()
     }
 }
 
-void level::handle_collisions(){
-    for(auto& i : collisionables){
-        i->handle_collision(collisionables);
-    }
-}
-
 void level::load_level_from_file(std::string fname)
 {
     try {
