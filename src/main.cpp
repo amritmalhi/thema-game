@@ -11,13 +11,15 @@
 
 #include "menu/main_menu.hpp"
 #include "menu/pause_menu.hpp"
+#include "menu/credits.hpp"
 
 sf::Font FONT;
 
 enum {
     STATE_MAIN_MENU,
     STATE_PAUSE_MENU,
-    STATE_LEVEL
+    STATE_LEVEL,
+    STATE_CREDITS
 };
 
 int main()
@@ -32,8 +34,10 @@ int main()
     window window("thema game", sf::Vector2f(window_witdh, window_height));
     window.setFramerateLimit( FPS );
 
+    // Create menus
     main_menu m = main_menu();
     pause_menu mp = pause_menu();
+    credits cr = credits();
 
     auto lag = std::chrono::nanoseconds(0);
     auto elapsed = std::chrono::nanoseconds(0);
@@ -51,6 +55,7 @@ int main()
                 window.resize();
                 m.resize(event.size.width, event.size.height);
                 mp.resize(event.size.width, event.size.height);
+                cr.resize(event.size.width, event.size.height);
             }
             if (event.type == sf::Event::MouseMoved) {
                 switch (state)
@@ -90,6 +95,9 @@ int main()
                         case NEW_GAME:
                             l = level(RES_LOC "res/level.txt");
                             state = STATE_LEVEL;
+                            break;
+                        case CREDITS:
+                            state = STATE_CREDITS;
                             break;
                         case QUIT_GAME:
                             window.close();
@@ -238,6 +246,14 @@ int main()
             case STATE_LEVEL:
                 window.set_target(l.get_current_target());
                 l.draw(window);
+                break;
+            case STATE_CREDITS:
+                window.no_target();
+                cr.draw(window);
+                if (cr.credits_finished()) {
+                    state = STATE_MAIN_MENU;
+                    cr = credits();
+                }
                 break;
         }
 

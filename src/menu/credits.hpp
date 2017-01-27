@@ -1,24 +1,26 @@
-#ifndef MAIN_MENU_H
+#ifndef CREDITS_H
 /* ==========================================================================
-   File: main_menu.hpp
+   File: credits.hpp
    ========================================================================== */
-#define MAIN_MENU_H
+#define CREDITS_H
 
 #include "menu.hpp"
 
-enum {
-    NEW_GAME,
-    CREDITS,
-    QUIT_GAME
-};
+#include <vector>
 
-class main_menu : public menu
+class credits : public menu
 {
+private:
+    std::vector<sf::Text> credit_text;
+    int window_height;
+
 public:
-    main_menu();
+    credits();
 
     void draw(sf::RenderWindow& window);
     void resize(int width, int height);
+
+    bool credits_finished();
 };
 
-#endif // MAIN_MENU_H
+#endif // CREDITS_H
