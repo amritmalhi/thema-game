@@ -14,6 +14,9 @@ public:
 	virtual void gravity(std::vector<collisionable*>& collisionables) = 0;
 	virtual void update_gravity() = 0;
 	bool check_new_position(std::vector<collisionable*>& collisionables);
+    bool detect_collision_position(collisionable & other, sf::Vector2f offset)override;
+    void handle_collision(collisionable & other);
+    object_position detect_collision_direction(collisionable & other)override;
 };
 
 #endif
