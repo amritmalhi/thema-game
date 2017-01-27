@@ -10,10 +10,24 @@
 
 #include "character.hpp"
 #include "wall.hpp"
+#include "level_button.hpp"
 
 level::level()
 {
 
+}
+
+character& level::get_current_target()
+{
+    return *trackables[current_trackable];
+}
+
+void level::next_controllables()
+{
+    current_trackable++;
+    if(current_trackable >= trackables.size()){
+        current_trackable = 0;
+    }
 }
 
 level::level(std::string fname)
@@ -23,6 +37,7 @@ level::level(std::string fname)
 
 level::~level()
 {
+    trackables.clear();
     physics_objects.clear();
     collisionables.clear();
     controllables.clear();
@@ -31,6 +46,7 @@ level::~level()
 
 void level::draw(sf::RenderWindow& window)
 {
+
     for (auto& i : drawables)
     {
         i->draw(window);
@@ -39,10 +55,7 @@ void level::draw(sf::RenderWindow& window)
 
 void level::handle_input()
 {
-    for (auto& i : controllables)
-    {
-        i->handle_input(collisionables);
-    }
+    controllables[current_trackable]->handle_input(collisionables);
 }
 
 void level::update()
@@ -62,16 +75,20 @@ void level::load_level_from_file(std::string fname)
         {
             try {
                 int type;
-                drawable* d = load_object(file, type);
+                drawable* d = load_object(file, type, textures);
 
                 drawables.push_back(std::shared_ptr<drawable>(d));
                 if (type == object_character) {
                     controllables.push_back((character*) d);
                     physics_objects.push_back((character*) d);
                     collisionables.push_back((character*) d);
+                    trackables.push_back((character*) d);
                 } else if (type == object_wall) {
                     collisionables.push_back((wall*) d);
-                }
+				}
+				else if (type == object_level_button) {
+					collisionables.push_back((level_button*) d);
+				}
             } catch (end_of_file& e) {
                 break;
             }

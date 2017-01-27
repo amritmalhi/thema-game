@@ -16,11 +16,13 @@ enum object_position{
     RIGHT,
     ABOVE,
     UNDER
-}; 
+};
 
 class collisionable: public object{
 public:
-    collisionable(sf::Vector2f position, sf::Vector2f size);
+    collisionable(sf::Vector2f position,
+                  sf::Vector2f size,
+                  object_type type);
     bool detect_collision(collisionable & other);
     object_position detect_position(collisionable & other);
 };

@@ -14,7 +14,7 @@
 
 class wall : public rectangle, public collisionable{
 public:
-    wall(sf::Vector2f position, sf::Vector2f size, sf::Color color);
+    wall(sf::Vector2f position, sf::Vector2f size, sf::Color color, object_type type = object_wall);
 };
 
 #endif //WALL_H

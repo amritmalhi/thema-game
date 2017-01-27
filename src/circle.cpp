@@ -10,10 +10,12 @@ circle::circle(sf::Vector2f pos, float radius, sf::Color color) :
 
 void circle::draw(sf::RenderWindow & window)
 {
-	sf::CircleShape myCirc;
-	myCirc.setRadius(radius);
-	myCirc.setPosition(position);
-	myCirc.setFillColor(color);
-	window.draw(myCirc);
+	circle_shape.setRadius(radius);
+	circle_shape.setPosition(position);
+	circle_shape.setFillColor(color);
+	window.draw(circle_shape);
 }
 
+void circle::set_texture() {
+	circle_shape.setTexture(&texture);
+}

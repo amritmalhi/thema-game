@@ -7,9 +7,13 @@
   DATE:       2017-01-20
 /*///===============================================
 
-collisionable::collisionable(sf::Vector2f position, sf::Vector2f size):
-    object(position, size)
-{}
+collisionable::collisionable(sf::Vector2f position,
+                             sf::Vector2f size,
+                             object_type type):
+object(position, type, size)
+{
+
+}
 
 
 bool collisionable::detect_collision(collisionable & other){
@@ -44,6 +48,3 @@ object_position collisionable::detect_position(collisionable & other){
     }
     return UNKNOWN;
 }
-
-
-
