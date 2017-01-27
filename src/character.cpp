@@ -4,7 +4,8 @@
 character::character(sf::Vector2f position,sf::Vector2f size, sf::Vector2f speed, sf::Color color):
 rectangle(position, size, color),
 moveable(speed),
-physics(position, size, object_character)
+physics(position, size, object_character),
+spawn_point(position)
 {
 
 }
@@ -66,4 +67,8 @@ sf::Vector2f character::get_position(){
 
 sf::Vector2f character::get_size(){
     return physics::size;
+}
+
+void character::respawn(){
+    physics::position = spawn_point;
 }

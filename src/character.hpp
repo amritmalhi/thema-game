@@ -14,7 +14,7 @@ private:
     sf::Keyboard::Key move_down_key;
 	float max_fall_speed = 8;
 	float gravity_modifier = 1;
-
+    sf::Vector2f spawn_point;
 
 public:
 	character(sf::Vector2f position,
@@ -29,6 +29,7 @@ public:
     void draw(sf::RenderWindow & window) override;
     sf::Vector2f get_position();
     sf::Vector2f get_size();
+    void respawn();
 };
 
 #endif //CHARACTER_HPP
