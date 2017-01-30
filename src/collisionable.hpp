@@ -25,9 +25,9 @@ public:
                   sf::Vector2f size,
                   object_type type);
     bool detect_collision(collisionable & other);
-    virtual bool detect_collision_position(collisionable & other, sf::Vector2f offset){}
-    virtual void handle_collision(std::vector<collisionable*>& collisionables){}
-    virtual object_position detect_collision_direction(collisionable & other){}
+	virtual bool detect_collision_position(collisionable & other, sf::Vector2f offset) { return false; }
+	virtual void handle_collision(std::vector<collisionable*>& collisionables) {}
+	virtual object_position detect_collision_direction(collisionable & other) { return LEFT; }
 };
 
 #endif //COLLISIONABLE_H
