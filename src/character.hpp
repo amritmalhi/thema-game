@@ -12,7 +12,7 @@ class character : public rectangle, public moveable,
                   public controllable, public physics{
 private:
     sf::Keyboard::Key move_down_key;
-	float max_fall_speed = 8;
+	float max_fall_speed = 15;
 	float gravity_modifier = 1;
     sf::Vector2f spawn_point;
 
@@ -30,6 +30,7 @@ public:
     sf::Vector2f get_position();
     sf::Vector2f get_size();
     void respawn();
+    void handle_collision(std::vector<collisionable*>& collisionables)override;
 };
 
 #endif //CHARACTER_HPP

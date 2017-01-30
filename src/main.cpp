@@ -225,6 +225,7 @@ int main()
                 case STATE_LEVEL:
                     l.handle_input();
                     l.update();
+                    l.handle_collisions();
                     break;
             }
 

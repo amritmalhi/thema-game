@@ -3,6 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "object.hpp"
+#include <vector>
 
 /*///===============================================
   FILE:       collisionable.hpp
@@ -24,7 +25,9 @@ public:
                   sf::Vector2f size,
                   object_type type);
     bool detect_collision(collisionable & other);
-    object_position detect_position(collisionable & other);
+    virtual bool detect_collision_position(collisionable & other, sf::Vector2f offset){}
+    virtual void handle_collision(std::vector<collisionable*>& collisionables){}
+    virtual object_position detect_collision_direction(collisionable & other){}
 };
 
 #endif //COLLISIONABLE_H

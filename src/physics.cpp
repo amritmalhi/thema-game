@@ -32,3 +32,29 @@ bool physics::check_new_position(std::vector<collisionable*>& collisionables)
     }
     return false;
 }
+
+bool physics::detect_collision_position(collisionable & other, sf::Vector2f offset)
+{
+    sf::Vector2f buffer = position;
+    position += offset;
+    if(detect_collision(other)){
+        position = buffer;
+        return true;
+    }
+    position = buffer;
+    return false;
+}
+
+object_position physics::detect_collision_direction(collisionable & other){
+    if(detect_collision_position(other, sf::Vector2f(0, -1))){
+        return ABOVE;
+    }else if(detect_collision_position(other, sf::Vector2f(0, 1))){
+        return UNDER;
+    }else if(detect_collision_position(other, sf::Vector2f(-1, 0))){
+        return LEFT;
+    }else if(detect_collision_position(other, sf::Vector2f(1, 0))){
+        return RIGHT;
+    }
+    return UNKNOWN;
+}
+

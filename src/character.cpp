@@ -11,35 +11,53 @@ spawn_point(position)
 }
 
 void character::move_left(std::vector<collisionable*>& collisionables, float speed_modifier){
-    float x = physics::position.x;
-    physics::position.x -= speed.x * speed_modifier;
-    if (check_new_position(collisionables)) {
-        physics::position.x = x;
-        return;
+    for(auto& i : collisionables){
+        if(i!=this){
+            if(detect_collision_direction(*i)==LEFT){
+                return;
+            }
+        }
     }
+    physics::position.x -= speed.x * speed_modifier;
     rectangle::position = physics::position;
 }
 
 void character::move_right(std::vector<collisionable*>& collisionables, float speed_modifier){
-    float x = physics::position.x;
-    physics::position.x += speed.x * speed_modifier;
-    if (check_new_position(collisionables)) {
-        physics::position.x = x;
-        return;
+    for(auto& i : collisionables){
+        if(detect_collision_direction(*i)==RIGHT){
+            return;
+        }
     }
+    physics::position.x += speed.x * speed_modifier;
     rectangle::position = physics::position;
 }
 
 void character::move_up(std::vector<collisionable*>& collisionables) {
-    float y = physics::position.y;
-    physics::position.y += 1;
-    if (check_new_position(collisionables)) {
-        fall_speed = -speed.y;
+    for(auto& i : collisionables){
+        if(i!=this){
+            if(detect_collision_direction(*i)==UNDER){
+                return;
+            }
+        }
     }
-    physics::position.y = y;
+    fall_speed = -speed.y;
+    rectangle::position = physics::position;
 }
 
 void character::gravity(std::vector<collisionable*>& collisionables) {
+    for(auto& i : collisionables){
+        if(i!=this){
+            if(detect_collision_position(*i, sf::Vector2f(0, fall_speed))){
+                fall_speed = 0;
+                return;
+            }
+        }
+    }
+    physics::position.y+= fall_speed;
+    rectangle::position = physics::position;
+
+
+    /*
     float y = physics::position.y;
 	physics::position.y += fall_speed;
     if (check_new_position(collisionables)) {
@@ -48,6 +66,7 @@ void character::gravity(std::vector<collisionable*>& collisionables) {
         return;
     }
     rectangle::position = physics::position;
+    */
 }
 
 void character::update_gravity() {
@@ -71,4 +90,26 @@ sf::Vector2f character::get_size(){
 
 void character::respawn(){
     physics::position = spawn_point;
+}
+
+void character::handle_collision(std::vector<collisionable*>& collisionables){
+    for(auto& i : collisionables){
+        if(i != this){
+            //std::cout<<detect_collision_direction(*i);
+            /*
+            if(detect_collision_position(*i, speed)){
+                switch(i->get_object_type()){
+                case object_wall:
+                    std::cout<<"wall"<<std::endl;
+                    break;
+                case object_killbox:
+                    respawn();
+                    break;
+                }
+            }
+            */
+            
+        }
+    }
+    //std::cout<<std::endl;
 }
