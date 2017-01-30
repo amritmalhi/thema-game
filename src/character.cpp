@@ -36,11 +36,12 @@ void character::move_up(std::vector<collisionable*>& collisionables) {
     for(auto& i : collisionables){
         if(i!=this){
             if(detect_collision_direction(*i)==UNDER){
+                fall_speed = -speed.y;
                 return;
             }
         }
     }
-    fall_speed = -speed.y;
+    //fall_speed = -speed.y;
     rectangle::position = physics::position;
 }
 
@@ -95,8 +96,6 @@ void character::respawn(){
 void character::handle_collision(std::vector<collisionable*>& collisionables){
     for(auto& i : collisionables){
         if(i != this){
-            //std::cout<<detect_collision_direction(*i);
-            /*
             if(detect_collision_position(*i, speed)){
                 switch(i->get_object_type()){
                 case object_wall:
@@ -107,9 +106,6 @@ void character::handle_collision(std::vector<collisionable*>& collisionables){
                     break;
                 }
             }
-            */
-            
         }
     }
-    //std::cout<<std::endl;
 }
