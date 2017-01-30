@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio/Music.hpp>
 #include "drawable.hpp"
 #include "rectangle.hpp"
 #include "line.hpp"
@@ -45,6 +46,15 @@ int main()
     auto previous = std::chrono::high_resolution_clock::now();
     auto current = std::chrono::high_resolution_clock::now();
 
+    sf::Music soundtrack;
+    
+    if (!soundtrack.openFromFile("../res/sound.ogg")) {
+            std::cout << "Music failed to load.";
+    } else {
+        soundtrack.setVolume(10); 
+        soundtrack.play(); 
+        soundtrack.setLoop(true);
+    }
 
     while (window.isOpen()){
         sf::Event event;
