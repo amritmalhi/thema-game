@@ -18,7 +18,8 @@ enum object_type {
 	object_level_button,
 	object_level_lever,
     object_endpoint,
-    object_killbox
+    object_killbox,
+	object_text
 };
 
 class object{

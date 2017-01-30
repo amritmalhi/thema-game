@@ -6,6 +6,7 @@ File: factory.cpp
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #include "rectangle.hpp"
 #include "line.hpp"
@@ -14,6 +15,7 @@ File: factory.cpp
 #include "wall.hpp"
 #include "level_button.hpp"
 #include "level_lever.hpp"
+#include "text.hpp"
 #include "object.hpp"
 
 drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf::Texture> & textures)
@@ -179,6 +181,22 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 
 	}
     
+	else if (name == "text") {
+		std::cout << "Hier!" << std::endl;
+		float x, y;
+		std::string message;
+		try {
+			input >> x >> y;
+			std::getline(input, message, '\0');
+		}
+		catch (std::exception & e) {
+			throw parse_exception(name);
+		}
+		text* t = new text(sf::Vector2f(x, y), message);
+		type = object_text;
+		return t;
+	}
+
 	else if (name == "") {
 		throw end_of_file();
 	}
