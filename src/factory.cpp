@@ -93,7 +93,9 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
         std::string texture_file_name;
 		try {
 			input >> x >> y >> width >> height >> speedx >> speedy;
-			input >> r >> g >> b >> texture_file_name;
+			input >> r >> g >> b;
+			std::getline(input, texture_file_name);
+			texture_file_name.erase(0, 1);
             if (texture_file_name == "") {
 				texture_file_name = "None";
 			}
@@ -188,6 +190,7 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		try {
 			input >> x >> y;
 			std::getline(input, message, '\0');
+			message.erase(0, 1);
 		}
 		catch (std::exception & e) {
 			throw parse_exception(name);
