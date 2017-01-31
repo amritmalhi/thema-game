@@ -7,6 +7,8 @@
 /*///===============================================
 
 #include "level_button.hpp"
+#include <array>
+#include <memory>
 
 physics::physics(sf::Vector2f position, sf::Vector2f size, object_type type):
 collisionable(position, size, type),
@@ -33,10 +35,29 @@ bool physics::check_new_position(std::vector<collisionable*>& collisionables)
     return false;
 }
 
+
+bool physics::detect_collision_position(std::vector<collisionable*>& collisionables, sf::Vector2f offset)
+{
+    sf::Vector2f buffer = position;
+    position += offset;
+    for(auto& i : collisionables){
+        if(i!=this){
+            if(detect_collision(*i)){
+                position = buffer;
+                return true;
+            }
+        }
+        
+    }
+    position = buffer;
+    return false;
+}
+
 bool physics::detect_collision_position(collisionable & other, sf::Vector2f offset)
 {
     sf::Vector2f buffer = position;
     position += offset;
+
     if(detect_collision(other)){
         position = buffer;
         return true;
@@ -45,16 +66,32 @@ bool physics::detect_collision_position(collisionable & other, sf::Vector2f offs
     return false;
 }
 
-object_position physics::detect_collision_direction(collisionable & other){
-    if(detect_collision_position(other, sf::Vector2f(0, -1))){
-        return ABOVE;
-    }else if(detect_collision_position(other, sf::Vector2f(0, 1))){
-        return UNDER;
-    }else if(detect_collision_position(other, sf::Vector2f(-1, 0))){
-        return LEFT;
-    }else if(detect_collision_position(other, sf::Vector2f(1, 0))){
-        return RIGHT;
+collision_direction physics::detect_collision_direction(std::vector<collisionable*>& collisionables, sf::Vector2f offset){
+    collision_direction buffer;
+    if(detect_collision_position(collisionables, sf::Vector2f(0, -offset.y))){
+        buffer.above = true;
+    }if(detect_collision_position(collisionables, sf::Vector2f(0, offset.y))){
+        buffer.under = true;
+    }if(detect_collision_position(collisionables, sf::Vector2f(-offset.x, 0))){
+        buffer.left = true;
+    }if(detect_collision_position(collisionables, sf::Vector2f(offset.x, 0))){
+        buffer.right = true;
     }
-    return UNKNOWN;
+    return buffer;
+}
+
+
+collision_direction physics::detect_collision_direction(collisionable & other, sf::Vector2f offset){
+    collision_direction buffer;
+    if(detect_collision_position(other, sf::Vector2f(0, -offset.y))){
+        buffer.above = true;
+    }if(detect_collision_position(other, sf::Vector2f(0, offset.y))){
+        buffer.under = true;
+    }if(detect_collision_position(other, sf::Vector2f(-offset.x, 0))){
+        buffer.left = true;
+    }if(detect_collision_position(other, sf::Vector2f(offset.x, 0))){
+        buffer.right = true;
+    }
+    return buffer;
 }
 

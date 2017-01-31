@@ -62,14 +62,13 @@ void level::update()
 {
     for (auto& i : physics_objects)
     {
-        i->gravity(collisionables);
-        i->update_gravity();
+        i->update_position(collisionables);
     }
 }
 
 void level::handle_collisions(){
     for(auto& i : collisionables){
-        i->handle_collision(collisionables);
+        //i->handle_collision(collisionables);
     }
 }
 

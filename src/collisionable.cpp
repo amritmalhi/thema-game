@@ -11,9 +11,7 @@ collisionable::collisionable(sf::Vector2f position,
                              sf::Vector2f size,
                              object_type type):
 object(position, type, size)
-{
-
-}
+{}
 
 
 bool collisionable::detect_collision(collisionable & other){
