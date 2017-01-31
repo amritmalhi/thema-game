@@ -9,6 +9,7 @@
 #include <iostream>
 #include "defines.hpp"
 #include "window.hpp"
+#include "paralax.hpp"
 
 #include "menu/main_menu.hpp"
 #include "menu/pause_menu.hpp"
@@ -39,6 +40,7 @@ int main()
     main_menu m = main_menu();
     pause_menu mp = pause_menu();
     credits cr = credits();
+    paralax x = paralax();
 
     auto lag = std::chrono::nanoseconds(0);
     auto elapsed = std::chrono::nanoseconds(0);
@@ -47,12 +49,12 @@ int main()
     auto current = std::chrono::high_resolution_clock::now();
 
     sf::Music soundtrack;
-    
+
     if (!soundtrack.openFromFile("../res/sound.ogg")) {
             std::cout << "Music failed to load.";
     } else {
-        soundtrack.setVolume(10); 
-        soundtrack.play(); 
+        soundtrack.setVolume(10);
+        soundtrack.play();
         soundtrack.setLoop(true);
     }
 
@@ -236,6 +238,8 @@ int main()
                     l.handle_input();
                     l.update();
                     l.handle_collisions();
+                    x.update(l.get_current_target().get_position().x,
+                             l.get_current_target().get_position().y);
                     break;
             }
 
@@ -256,6 +260,7 @@ int main()
                 break;
             case STATE_LEVEL:
                 window.set_target(l.get_current_target());
+                x.draw(window);
                 l.draw(window);
                 break;
             case STATE_CREDITS:
