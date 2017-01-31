@@ -13,9 +13,10 @@ private:
     sf::Texture textures;
 
 public:
-    paralax();
+    paralax(std::string fname = "../res/paralax.jpg");
 
     void update(float x, float y);
+    void update_texture(std::string fname);
     void draw(sf::RenderWindow& window);
 };
 
