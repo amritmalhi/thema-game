@@ -24,17 +24,17 @@ spawn_point(position)
 }
 
 void character::move_left(std::vector<collisionable*>& collisionables, float speed_modifier){
-    speed.x -= 1 * speed_modifier;
+    speed.x -= max_speed.x * speed_modifier;
 }
 
 void character::move_right(std::vector<collisionable*>& collisionables, float speed_modifier){
-    speed.x += 1 * speed_modifier;
+    speed.x += max_speed.x * speed_modifier;
 }
 
 void character::move_up(std::vector<collisionable*>& collisionables) {
     auto buffer = detect_collision_direction(collisionables);
     if(buffer.under){
-        speed.y += -20;
+        speed.y += -max_speed.y;
     }
 }
 
@@ -42,6 +42,7 @@ void character::update_position(std::vector<collisionable*>& collisionables){
     update_air_resistance();
     update_gravity();
     sf::Vector2f buffer_pos = physics::position;
+    std::cout << this << " " << speed.x << " : " << speed.y << std::endl;
     physics::position += speed;
     //handle_collision(collisionables, buffer_pos);
     for(auto& i : collisionables){
@@ -104,7 +105,7 @@ void character::update_position(std::vector<collisionable*>& collisionables){
 }
 
 void character::update_air_resistance(){
-    speed *= 0.8f;
+    speed.x *= 0.8f;
     if(speed.x < 0.1 && speed.x > -0.1){
         speed.x = 0;
     }
@@ -116,6 +117,11 @@ void character::update_air_resistance(){
     else if(speed.x < -max_speed.x){
         speed.x = -max_speed.x;
     }
+
+    if (speed.y > 15) {
+        speed.y = 15;
+    }
+
 
     
 }
