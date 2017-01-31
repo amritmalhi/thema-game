@@ -182,6 +182,24 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		return w;
 
 	}
+
+        else if (name == "endbox") {
+		float x, y, width, height;
+		int r, g, b;
+		try {
+			input >> x >> y >> width >> height >> r >> g >> b;
+		}
+		catch (std::exception& e) {
+			throw parse_exception(name);
+		}
+
+		wall* w = new wall(sf::Vector2f(x, y),
+			sf::Vector2f(width, height),
+            sf::Color(r, g, b),
+            object_end_box);
+		type = object_end_box;
+		return w;
+	}
     
 	else if (name == "text") {
 		std::cout << "Hier!" << std::endl;
