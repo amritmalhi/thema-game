@@ -202,12 +202,11 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 	}
     
 	else if (name == "text") {
-		std::cout << "Hier!" << std::endl;
 		float x, y;
 		std::string message;
 		try {
 			input >> x >> y;
-			std::getline(input, message, '\0');
+			std::getline(input, message);
 			message.erase(0, 1);
 		}
 		catch (std::exception & e) {
