@@ -42,7 +42,7 @@ void character::update_position(std::vector<collisionable*>& collisionables){
     update_air_resistance();
     update_gravity();
     sf::Vector2f buffer_pos = physics::position;
-    std::cout << this << " " << speed.x << " : " << speed.y << std::endl;
+//    std::cout << this << " " << speed.x << " : " << speed.y << std::endl;
     physics::position += speed;
     //handle_collision(collisionables, buffer_pos);
     for(auto& i : collisionables){
@@ -54,52 +54,33 @@ void character::update_position(std::vector<collisionable*>& collisionables){
                 switch(i->get_object_type()){
                 case object_wall:
                     handle_collision_impassables(detected_direction, buffer_pos);
-                    std::cout<<"wall"<<std::endl;
+//                    std::cout<<"Wall"<<std::endl;
                     break;
                 case object_killbox:
                     respawn();
+//                    std::cout<<"Killbox"<<std::endl;
                     break;
                 case object_level_button:
-                    //i->activate();
-                    std::cout<<"button"<<std::endl;
+//                      i->activate();   // Doesn't currently work but is supposed to be handeled here
+//                    std::cout<<"Button"<<std::endl;
                     break;
                 case object_level_lever:
-                    std::cout<<"lever"<<std::endl;
+//                      i->activate();   // Doesn't currently work but is supposed to be handeled here
+//                    std::cout<<"Lever"<<std::endl;
                     break;
                 case object_character:
                     handle_collision_impassables(detected_direction, buffer_pos);
+                    break;
+                case object_end_box:
+                    // Should tell the level manager to go to the next lever, but can't access the level manager here yet.
+                    // To showcase it works, it respawns the player instead, for now.
+                    respawn();
+//                    std::cout<<"Killbox"<<std::endl;
+                    break;
                 }
             }
         }
     }
-    
-
-
-
-
-
-    
-    /*
-    //std::cout<<this<<' '<<speed.x<<' '<<speed.y<<std::endl;
-    
-    update_air_resistance();
-    update_gravity();
-    sf::Vector2f buffer_pos = physics::position;
-    physics::position += speed;
-    handle_collision(collisionables, buffer_pos);
-    
-    auto buffer = detect_collision_direction(collisionables, speed);
-
-    if(buffer.above||buffer.under){
-        physics::position.y = buffer_pos.y;
-        speed.y = 0;
-    }
-    if(buffer.left||buffer.right){
-        physics::position.x = buffer_pos.x;
-        speed.x = 0;
-    }
-     std::cout<<buffer.left<<buffer.right<<buffer.above<<buffer.under<<std::endl;
-    */
     rectangle::position = physics::position;
     
 }
