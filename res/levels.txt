@@ -1,2 +1,3 @@
-level.txt paralax.jpg
-level2.txt paralax.jpg
+tutorial.txt paralax2.jpg
+level.txt paralax2.jpg
+level2.txt paralax2.jpg
