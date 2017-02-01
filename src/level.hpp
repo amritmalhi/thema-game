@@ -19,7 +19,6 @@
 #include "controllable.hpp"
 #include "collisionable.hpp"
 #include "physics.hpp"
-#include "view_port.hpp"
 #include "character.hpp"
 
 /// The level class that holds all the objects inside the level together
