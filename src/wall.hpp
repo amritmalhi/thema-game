@@ -6,12 +6,6 @@
 #include "collisionable.hpp"
 #include "SFML/Graphics.hpp"
 
-/*///===============================================
-  FILE:       wall.hpp
-  AUTHOR:     Stefan de Beer
-  DATE:       2017-01-20
-/*///===============================================
-
 ///Class for displaying a wall.
 class wall : public rectangle, public collisionable{
 public:

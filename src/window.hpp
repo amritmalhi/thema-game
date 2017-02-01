@@ -5,13 +5,6 @@
 #include "object.hpp"
 #include "controllable.hpp"
 #include "character.hpp"
-//#include <SFML/Drawables.hpp>
-
-/*///===============================================
-  FILE:       window.hpp
-  AUTHOR:     Stefan de Beer
-  DATE:       2017-01-24
-/*///===============================================
 
 ///This clas expands the normal sf::renderWindow with a view port.
 class window : public sf::RenderWindow{
