@@ -6,12 +6,6 @@
 #include <vector>
 #include <array>
 
-/*///===============================================
-  FILE:       collisionable.hpp
-  AUTHOR:     Stefan de Beer
-  DATE:       2017-01-20
-/*///===============================================
-
 enum object_position{
     UNKNOWN,
     LEFT,

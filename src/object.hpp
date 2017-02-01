@@ -3,11 +3,6 @@
 
 #include "SFML/Graphics.hpp"
 
-/*///===============================================
-  FILE:       object.hpp
-  AUTHOR:     Stefan de Beer
-  DATE:       2017-01-20
-/*///===============================================
 /*!
   This enum has has object_types so other objects can know what the collide with.
  */
