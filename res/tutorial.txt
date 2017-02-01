@@ -16,5 +16,5 @@ text 924 584 "Press Q to switch between"
 text 924 614 "different characters!"
 text 1678 0 "Congratulations!"
 text 1550 30 "You have finished the tutorial!"
-character 1200 700 64 64 4 8 0 0 255
-character 1300 700 64 64 4 8 255 0 0
+character 128 804 64 64 4 8 0 0 255
+character 384 804 64 64 4 8 255 0 0
