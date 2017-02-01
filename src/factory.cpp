@@ -35,7 +35,9 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		int r, g, b;
 		std::string texture_file_name;
 		try {
-			input >> x >> y >> width >> height >> r >> g >> b >> texture_file_name;
+			input >> x >> y >> width >> height >> r >> g >> b;
+			std::getline(input, texture_file_name);
+			texture_file_name.erase(0, 1);
 			if (texture_file_name == "") {
 				texture_file_name = "None";
 			}

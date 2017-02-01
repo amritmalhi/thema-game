@@ -58,7 +58,7 @@ void level_manager::next_level()
 {
     level_index++;
     if (level_index >= level_list.size()) {
-        return;
+		level_index = 0;
     }
     lvl = level(RES_LOC "res/" + level_list[level_index].level_name);
     par.update_texture(RES_LOC "res/" + level_list[level_index].paralax_background);
