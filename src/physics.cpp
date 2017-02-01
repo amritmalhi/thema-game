@@ -17,25 +17,6 @@ previous_position(position)
 
 }
 
-bool physics::check_new_position(std::vector<collisionable*>& collisionables)
-{
-    for (auto& i : collisionables) {
-        if (i != this) {
-            if (detect_collision(*i)) {
-				switch (i->get_object_type())
-				{
-				case object_level_button:
-					((level_button*)i)->activate();
-					break;
-				}
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-
 bool physics::detect_collision_position(std::vector<collisionable*>& collisionables, sf::Vector2f offset)
 {
     sf::Vector2f buffer = position;
