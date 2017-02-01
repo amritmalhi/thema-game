@@ -7,6 +7,7 @@
 main_menu::main_menu()
 {
     add_button("New Game", NEW_GAME);
+    add_button("Credits", CREDITS);
     add_button("Quit Game", QUIT_GAME);
     center_buttons(1600, 900);
 }

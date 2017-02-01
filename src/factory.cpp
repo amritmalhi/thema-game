@@ -6,6 +6,7 @@ File: factory.cpp
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #include "rectangle.hpp"
 #include "line.hpp"
@@ -14,6 +15,7 @@ File: factory.cpp
 #include "wall.hpp"
 #include "level_button.hpp"
 #include "level_lever.hpp"
+#include "text.hpp"
 #include "object.hpp"
 
 drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf::Texture> & textures)
@@ -33,7 +35,9 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		int r, g, b;
 		std::string texture_file_name;
 		try {
-			input >> x >> y >> width >> height >> r >> g >> b >> texture_file_name;
+			input >> x >> y >> width >> height >> r >> g >> b;
+			std::getline(input, texture_file_name);
+			texture_file_name.erase(0, 1);
 			if (texture_file_name == "") {
 				texture_file_name = "None";
 			}
@@ -91,7 +95,9 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
         std::string texture_file_name;
 		try {
 			input >> x >> y >> width >> height >> speedx >> speedy;
-			input >> r >> g >> b >> texture_file_name;
+			input >> r >> g >> b;
+			std::getline(input, texture_file_name);
+			texture_file_name.erase(0, 1);
             if (texture_file_name == "") {
 				texture_file_name = "None";
 			}
@@ -178,7 +184,41 @@ drawable* load_object(std::ifstream& input, int& type, std::map<std::string, sf:
 		return w;
 
 	}
+
+        else if (name == "endbox") {
+		float x, y, width, height;
+		int r, g, b;
+		try {
+			input >> x >> y >> width >> height >> r >> g >> b;
+		}
+		catch (std::exception& e) {
+			throw parse_exception(name);
+		}
+
+		wall* w = new wall(sf::Vector2f(x, y),
+			sf::Vector2f(width, height),
+            sf::Color(r, g, b),
+            object_end_box);
+		type = object_end_box;
+		return w;
+	}
     
+	else if (name == "text") {
+		float x, y;
+		std::string message;
+		try {
+			input >> x >> y;
+			std::getline(input, message);
+			message.erase(0, 1);
+		}
+		catch (std::exception & e) {
+			throw parse_exception(name);
+		}
+		text* t = new text(sf::Vector2f(x, y), message);
+		type = object_text;
+		return t;
+	}
+
 	else if (name == "") {
 		throw end_of_file();
 	}

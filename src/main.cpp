@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio/Music.hpp>
 #include "drawable.hpp"
 #include "rectangle.hpp"
 #include "line.hpp"
@@ -8,16 +9,19 @@
 #include <iostream>
 #include "defines.hpp"
 #include "window.hpp"
+#include "level_manager.hpp"
 
 #include "menu/main_menu.hpp"
 #include "menu/pause_menu.hpp"
+#include "menu/credits.hpp"
 
 sf::Font FONT;
 
 enum {
     STATE_MAIN_MENU,
     STATE_PAUSE_MENU,
-    STATE_LEVEL
+    STATE_LEVEL,
+    STATE_CREDITS
 };
 
 int main()
@@ -27,13 +31,15 @@ int main()
     int state = STATE_MAIN_MENU;
 
     FONT.loadFromFile(RES_LOC "res/Android.ttf");
-    level l = level(RES_LOC "res/level.txt");
+    level_manager lm;
 
     window window("thema game", sf::Vector2f(window_witdh, window_height));
     window.setFramerateLimit( FPS );
 
+    // Create menus
     main_menu m = main_menu();
     pause_menu mp = pause_menu();
+    credits cr = credits();
 
     auto lag = std::chrono::nanoseconds(0);
     auto elapsed = std::chrono::nanoseconds(0);
@@ -41,6 +47,15 @@ int main()
     auto previous = std::chrono::high_resolution_clock::now();
     auto current = std::chrono::high_resolution_clock::now();
 
+    sf::Music soundtrack;
+
+    if (!soundtrack.openFromFile("../res/sound.ogg")) {
+            std::cout << "Music failed to load.";
+    } else {
+        soundtrack.setVolume(10);
+        soundtrack.play();
+        soundtrack.setLoop(true);
+    }
 
     while (window.isOpen()){
         sf::Event event;
@@ -51,6 +66,7 @@ int main()
                 window.resize();
                 m.resize(event.size.width, event.size.height);
                 mp.resize(event.size.width, event.size.height);
+                cr.resize(event.size.width, event.size.height);
             }
             if (event.type == sf::Event::MouseMoved) {
                 switch (state)
@@ -88,8 +104,11 @@ int main()
                     switch (ret)
                     {
                         case NEW_GAME:
-                            l = level(RES_LOC "res/level.txt");
+                            lm.load_first_level();
                             state = STATE_LEVEL;
+                            break;
+                        case CREDITS:
+                            state = STATE_CREDITS;
                             break;
                         case QUIT_GAME:
                             window.close();
@@ -130,7 +149,7 @@ int main()
                         state = STATE_PAUSE_MENU;
                         break;
                     case sf::Keyboard::Q:
-                        l.next_controllables();
+                        lm.get_level().next_controllables();
                         break;
                 }
             } else if (state == STATE_LEVEL &&
@@ -142,7 +161,7 @@ int main()
                         break;
                     case 11:
                     case 15:
-                        l.next_controllables();
+                        lm.get_level().next_controllables();
                         break;
                 }
 
@@ -215,8 +234,17 @@ int main()
                 case STATE_PAUSE_MENU:
                     break;
                 case STATE_LEVEL:
-                    l.handle_input();
-                    l.update();
+                    lm.get_level().handle_input();
+                    lm.get_level().update();
+                    lm.get_level().handle_collisions();
+                    lm.get_paralax().update(
+                        lm.get_level().get_current_target().get_position().x,
+                        lm.get_level().get_current_target().get_position().y);
+
+                    //Temporary way to get to the next level
+                    if (lm.get_level().get_current_target().get_position().y > 1000) {
+                        lm.next_level();
+                    }
                     break;
             }
 
@@ -236,8 +264,17 @@ int main()
                 mp.draw(window);
                 break;
             case STATE_LEVEL:
-                window.set_target(l.get_current_target());
-                l.draw(window);
+                window.set_target(lm.get_level().get_current_target());
+                lm.get_paralax().draw(window);
+                lm.get_level().draw(window);
+                break;
+            case STATE_CREDITS:
+                window.no_target();
+                cr.draw(window);
+                if (cr.credits_finished()) {
+                    state = STATE_MAIN_MENU;
+                    cr = credits();
+                }
                 break;
         }
 

@@ -1,0 +1,22 @@
+wall 0 0 1500 32 255 255 255
+wall 0 0 32 900 255 255 255
+wall 0 868 860 32 255 255 255
+wall 860 768 32 132 255 255 255
+wall 860 768 640 32 255 255 255
+wall 1468 288 32 512 255 255 255
+wall 348 576 512 32 255 255 255
+wall 860 432 256 32 255 255 255
+wall 1116 288 720 32 255 255 255
+wall 1468 0 32 128 255 255 255
+wall 1468 96 368 32 255 255 255
+endbox 1804 128 32 160 255 0 0
+rectangle 1804 288 2048 32 255 255 255
+rectangle 1804 96 2048 32 255 255 255
+text 64 676 "Use the left and right"
+text 64 706 "arrow keys to move!"
+text 924 584 "Press Q to switch between"
+text 924 614 "different characters!"
+text 1678 0 "Congratulations!"
+text 1550 30 "You have finished the tutorial!"
+character 128 804 64 64 4 8 0 0 255
+character 384 804 64 64 4 8 255 0 0
