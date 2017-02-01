@@ -1,7 +1,0 @@
-DOXYFILE_ENCODING       = UTF-8
-PROJECT_NAME            = "thema game"
-PROJECT_BRIEF           = "thema game"
-OUTPUT_LANGUAGE         = English
-OUTPUT_DIRECTORY        = docs
-RECURSIVE               = YES
-INPUT                   = src
