@@ -11,10 +11,10 @@ controllable::controllable(sf::Keyboard::Key move_left_key,
 
 void controllable::handle_input(std::vector<collisionable*>& collisionables){
 	if(sf::Keyboard::isKeyPressed(move_left_key)){
-		move_left(collisionables);
+		move_left();
 	}
 	if(sf::Keyboard::isKeyPressed(move_right_key)){
-		move_right(collisionables);
+		move_right();
 	}
 	if (sf::Keyboard::isKeyPressed(move_up_key)) {
 		move_up(collisionables);
@@ -26,10 +26,10 @@ void controllable::handle_input(std::vector<collisionable*>& collisionables){
         float normalised_j_x_axis = fabs(joystick_x_axis / 100);
 
 	    if (joystick_x_axis < -15) {
-            move_left(collisionables, normalised_j_x_axis);
+            move_left(normalised_j_x_axis);
         }
         else if (joystick_x_axis > 15) {
-            move_right(collisionables, normalised_j_x_axis);
+            move_right(normalised_j_x_axis);
         }
         if (sf::Joystick::isButtonPressed(0, 1) ) {
             move_up(collisionables);

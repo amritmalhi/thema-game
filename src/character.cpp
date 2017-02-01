@@ -23,11 +23,11 @@ spawn_point(position)
 
 }
 
-void character::move_left(std::vector<collisionable*>& collisionables, float speed_modifier){
+void character::move_left(float speed_modifier){
     speed.x -= max_speed.x * speed_modifier;
 }
 
-void character::move_right(std::vector<collisionable*>& collisionables, float speed_modifier){
+void character::move_right(float speed_modifier){
     speed.x += max_speed.x * speed_modifier;
 }
 
@@ -44,7 +44,6 @@ void character::update_position(std::vector<collisionable*>& collisionables){
     sf::Vector2f buffer_pos = physics::position;
 //    std::cout << this << " " << speed.x << " : " << speed.y << std::endl;
     physics::position += speed;
-    //handle_collision(collisionables, buffer_pos);
     for(auto& i : collisionables){
         auto detected_direction = detect_collision_direction(*i, speed);
         //std::cout<<this<<' '<<buffer.left<<buffer.right<<buffer.above<<buffer.under<<std::endl;
@@ -101,12 +100,8 @@ void character::update_air_resistance(){
 
     if (speed.y > 15) {
         speed.y = 15;
-    }
-
-
-    
+    }   
 }
-
 
 void character::update_gravity() {
     speed.y += gravitational_acceleration * gravity_modifier;
@@ -129,41 +124,3 @@ void character::respawn(){
     physics::position = spawn_point;
 }
 
-void character::handle_collision(std::vector<collisionable*>& collisionables, sf::Vector2f buffer_pos){
-    update_air_resistance();
-    update_gravity();
-    //sf::Vector2f buffer_pos = physics::position;
-    physics::position += speed;
-    handle_collision(collisionables, buffer_pos);
-    for(auto& i : collisionables){
-        auto buffer = detect_collision_direction(*i, speed);
-        std::cout<<this<<' '<<buffer.left<<buffer.right<<buffer.above<<buffer.under<<std::endl;
-        if(i != this){
-            if(detect_collision(*i)){
-                switch(i->get_object_type()){
-                case object_wall:
-                    if(buffer.above||buffer.under){
-                        physics::position.y = buffer_pos.y;
-                        speed.y = 0;
-                    }
-                    if(buffer.left||buffer.right){
-                        physics::position.x = buffer_pos.x;
-                        speed.x = 0;
-                    }
-                    std::cout<<"wall"<<std::endl;
-                    break;
-                case object_killbox:
-                    respawn();
-                    break;
-                case object_level_button:
-                    //i->activate();
-                    std::cout<<"button"<<std::endl;
-                    break;
-                case object_level_lever:
-                    std::cout<<"lever"<<std::endl;
-                    break;
-                }
-            }
-        }
-    }  
-}
