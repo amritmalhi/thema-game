@@ -9,6 +9,7 @@
 #include <iostream>
 #include "defines.hpp"
 #include "window.hpp"
+#include "level_manager.hpp"
 
 #include "menu/main_menu.hpp"
 #include "menu/pause_menu.hpp"
@@ -30,7 +31,7 @@ int main()
     int state = STATE_MAIN_MENU;
 
     FONT.loadFromFile(RES_LOC "res/Android.ttf");
-    level l = level(RES_LOC "res/level.txt");
+    level_manager lm;
 
     window window("thema game", sf::Vector2f(window_witdh, window_height));
     window.setFramerateLimit( FPS );
@@ -47,12 +48,12 @@ int main()
     auto current = std::chrono::high_resolution_clock::now();
 
     sf::Music soundtrack;
-    
+
     if (!soundtrack.openFromFile("../res/sound.ogg")) {
             std::cout << "Music failed to load.";
     } else {
-        soundtrack.setVolume(10); 
-        soundtrack.play(); 
+        soundtrack.setVolume(10);
+        soundtrack.play();
         soundtrack.setLoop(true);
     }
 
@@ -103,7 +104,7 @@ int main()
                     switch (ret)
                     {
                         case NEW_GAME:
-                            l = level(RES_LOC "res/level.txt");
+                            lm.load_first_level();
                             state = STATE_LEVEL;
                             break;
                         case CREDITS:
@@ -148,7 +149,7 @@ int main()
                         state = STATE_PAUSE_MENU;
                         break;
                     case sf::Keyboard::Q:
-                        l.next_controllables();
+                        lm.get_level().next_controllables();
                         break;
                 }
             } else if (state == STATE_LEVEL &&
@@ -160,7 +161,7 @@ int main()
                         break;
                     case 11:
                     case 15:
-                        l.next_controllables();
+                        lm.get_level().next_controllables();
                         break;
                 }
 
@@ -233,9 +234,17 @@ int main()
                 case STATE_PAUSE_MENU:
                     break;
                 case STATE_LEVEL:
-                    l.handle_input();
-                    l.update();
-                    l.handle_collisions();
+                    lm.get_level().handle_input();
+                    lm.get_level().update();
+                    lm.get_level().handle_collisions();
+                    lm.get_paralax().update(
+                        lm.get_level().get_current_target().get_position().x,
+                        lm.get_level().get_current_target().get_position().y);
+
+                    //Temporary way to get to the next level
+                    if (lm.get_level().get_current_target().get_position().y > 1000) {
+                        lm.next_level();
+                    }
                     break;
             }
 
@@ -255,8 +264,9 @@ int main()
                 mp.draw(window);
                 break;
             case STATE_LEVEL:
-                window.set_target(l.get_current_target());
-                l.draw(window);
+                window.set_target(lm.get_level().get_current_target());
+                lm.get_paralax().draw(window);
+                lm.get_level().draw(window);
                 break;
             case STATE_CREDITS:
                 window.no_target();
