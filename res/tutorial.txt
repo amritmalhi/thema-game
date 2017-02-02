@@ -12,8 +12,8 @@ wall 1468 96 368 32 255 255 255
 endbox 1804 128 32 160 255 0 0
 rectangle 1804 288 2048 32 255 255 255
 rectangle 1804 96 2048 32 255 255 255
-text 64 676 "Use the left and right"
-text 64 706 "arrow keys to move!"
+text 64 676 "Use the left and right arrow keys"
+text 64 706 "to move and up arrow key to jump!"
 text 924 584 "Press Q to switch between"
 text 924 614 "different characters!"
 text 1678 0 "Congratulations!"
